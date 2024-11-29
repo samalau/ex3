@@ -1,6 +1,6 @@
 /******************
-Name:
-ID:
+Name: Samantha Newmark
+ID: 346587629
 Assignment: ex3
 *******************/
 
