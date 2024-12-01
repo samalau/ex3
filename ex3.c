@@ -19,27 +19,21 @@ Assignment: ex3
 #define deltas  6
 #define done  7
 
-char brands[NUM_OF_BRANDS][BRANDS_NAMES] = {"Toyoga", "HyunNight", "Mazduh", "FolksVegan", "Key-Yuh"};
-char types[NUM_OF_TYPES][TYPES_NAMES] = {"SUV", "Sedan", "Coupe", "GT"};
+char brands[NUM_OF_BRANDS][BRANDS_NAMES] = {"Toyoga", "HyunNight", "Mazduh", "FolksVegan", "Key-Yuh"} ;
+char types[NUM_OF_TYPES][TYPES_NAMES] = {"SUV", "Sedan", "Coupe", "GT"} ;
 
 
 void pathOneOne(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
-	
-	int brandIndex, sales[NUM_OF_TYPES];
-	printf("");
-	scanf(" %d", brandIndex);
-	for (int typeIndex = 0; typeIndex < NUM_OF_TYPES; typeIndex++) {
-		scanf(" %d", &sales[typeIndex]);
+	int brandIndex, sales[NUM_OF_TYPES] ;
+	printf("") ;
+	scanf(" %d", &brandIndex) ;
+	for (int typeIndex = 0 ; typeIndex < NUM_OF_TYPES ; typeIndex++) {
+		scanf(" %d", &sales[typeIndex]) ;
 	}
-	
-	updateCube(cube[days[brandIndex]][brandIndex][NUM_OF_TYPES], days[brandIndex], brandIndex, sales[NUM_OF_TYPES]);
-
-	
-	dayCounter(days[brandIndex], NULL, NULL);
-
-
-
+	updateCube(cube, days, &brandIndex, sales) ;
+	dayCounter(days[brandIndex], NULL, NULL) ;
 }
+
 
 void pathTwo() {
 	
@@ -64,23 +58,23 @@ void pathOneOne() {
 
 void dayCounter(int days[NUM_OF_BRANDS], int* brands, int* brandIndex) {
 	if (brandIndex == NULL) {
-		for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
-			days[i]++;  
+		for (int i = 0  ; i < NUM_OF_BRANDS  ; i++) {
+			days[i]++ ;  
 		}
 	} else {
-		days[brands[*brandIndex]]++;
+		days[brands[*brandIndex]]++ ;
 	}
 }
 
 
 void updateCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int* brandIndex, int sales[NUM_OF_TYPES]) {
 	if (brandIndex == NULL || *brandIndex < 0 || *brandIndex > NUM_OF_BRANDS - 1) {
-		printf("This brand is not valid\n");
+		printf("This brand is not valid\n") ;
 	} else {
-		int currentDay = days[*brandIndex];
+		int currentDay = days[*brandIndex] ;
 		if (currentDay < DAYS_IN_YEAR) {
-			for (int typeIndex = 0; typeIndex < NUM_OF_TYPES; typeIndex++) {
-				cube[currentDay][*brandIndex][typeIndex] = sales[typeIndex];
+			for (int typeIndex = 0 ; typeIndex < NUM_OF_TYPES ; typeIndex++) {
+				cube[currentDay][*brandIndex][typeIndex] = sales[typeIndex] ;
 			}
 		}
 		// else {}
@@ -89,10 +83,10 @@ void updateCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 
 
 void initCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int initAsValue) {
-	for (int i = 0; i < DAYS_IN_YEAR; i++) {
-		for (int j = 0; j < NUM_OF_BRANDS; j++) {
-			for (int k = 0; k < NUM_OF_TYPES; k++) {
-				cube[i][j][k] = initAsValue;
+	for (int i = 0 ; i < DAYS_IN_YEAR ; i++) {
+		for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
+			for (int k = 0 ; k < NUM_OF_TYPES ; k++) {
+				cube[i][j][k] = initAsValue ;
 			}
 		}
 	}
@@ -107,46 +101,46 @@ void printMenu(){
 		   "4.Print All Data\n"
 		   "5.Provide Overall (simple) Insights\n"
 		   "6.Provide Average Delta Metrics\n"
-		   "7.exit\n");
+		   "7.exit\n") ;
 }
 
 
 int main() {
-	int brandIndex, typeIndex;
-	int sales[NUM_OF_TYPES] ;
-	int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES];
-	int days[NUM_OF_BRANDS] = {0};
-	initCube(cube, -1);
-	int choice;
+	int brandIndex, typeIndex ;
+	int sales[NUM_OF_TYPES]  ;
+	int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES] ;
+	int days[NUM_OF_BRANDS] = {0} ;
+	initCube(cube, -1) ;
+	int choice = 0 ;
 	while(choice != done){
 		switch(choice){
 			case done:
-				printf("Goodbye!\n");
-				break;
+				printf("Goodbye!\n") ;
+				break ;
 			case addOne:
 				//...
-				break;
+				break ;
 			case addAll:
 				//...
-				break;
+				break ;
 			case stats:
 				//...
-				break;
+				break ;
 			case print:
 				//...
-				break;
+				break ;
 			case insights:
 				//...
-				break;
+				break ;
 			case deltas:
 				//...
-				break;
+				break ;
 			default:
-				printf("Invalid input\n");
+				printf("Invalid input\n") ;
 		}
-		printMenu();
-		scanf("%d", &choice);
+		printMenu() ;
+		scanf("%d", &choice) ;
 	}
-	printf("Goodbye!\n");
-	return 0;
+	printf("Goodbye!\n") ;
+	return 0 ;
 }
