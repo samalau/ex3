@@ -22,53 +22,28 @@ Assignment: ex3
 char brands[NUM_OF_BRANDS][BRANDS_NAMES] = {"Toyoga", "HyunNight", "Mazduh", "FolksVegan", "Key-Yuh"} ;
 char types[NUM_OF_TYPES][TYPES_NAMES] = {"SUV", "Sedan", "Coupe", "GT"} ;
 
-
-void pathOneOne(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
-	int brandIndex ;
-	printf("Enter the sales data for a single brand on a single day:\n") ;
-	scanf(" %d", &brandIndex) ;
-	for (int typeIndex = 0 ; typeIndex < NUM_OF_TYPES ; typeIndex++) {
-		scanf(" %d", &sales[typeIndex]) ;
-	}
-	updateCube(cube, days, &brandIndex, sales) ;
-	dayCounter(days[brandIndex], NULL, NULL) ;
-}
+void pathOneOne(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) ;
+void pathTwoAll(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) ;
 
 
-// void pathTwo() {
-	
-// }
+// void pathThreeStat()
+// void pathFourDisplay()
+// void pathFiveInsight()
+// void pathSixDelta()
 
-// void pathOneOne() {
-	
-// }
-
-// void pathOneOne() {
-	
-// }
-
-// void pathOneOne() {
-	
-// }
-
-// void pathOneOne() {
-	
-// }
-
-
-void dayCounter(int days[NUM_OF_BRANDS], int* brands, int* brandIndex) {
+void dayCounter(int days[NUM_OF_BRANDS], int* brandIndex) {
 	if (brandIndex == NULL) {
 		for (int i = 0  ; i < NUM_OF_BRANDS  ; i++) {
 			days[i]++ ;  
 		}
 	} else {
-		days[brands[*brandIndex]]++ ;
+		days[*brandIndex]++ ;
 	}
 }
 
 
 void updateCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int* brandIndex, int sales[NUM_OF_TYPES]) {
-	if (brandIndex == NULL || *brandIndex < 0 || *brandIndex > NUM_OF_BRANDS - 1) {
+	if (*brandIndex < 0 || *brandIndex > NUM_OF_BRANDS - 1) {
 		printf("This brand is not valid\n") ;
 	} else {
 		int currentDay = days[*brandIndex] ;
@@ -112,6 +87,8 @@ int main() {
 	initCube(cube, -1) ;
 	int choice = 0 ;
 	while(choice != done) {
+		printMenu() ;
+		scanf(" %d", &choice) ;  // consider validating
 		switch(choice){
 			case done:
 				printf("Goodbye!\n") ;
@@ -120,7 +97,7 @@ int main() {
 				pathOneOne(cube, days, sales) ;
 				break ;
 			case addAll:
-				//...
+				pathTwoAll(cube, days, sales) ;
 				break ;
 			case stats:
 				//...
@@ -137,9 +114,56 @@ int main() {
 			default:
 				printf("Invalid input\n") ;
 		}
-		printMenu() ;
-		scanf("%d", &choice) ;
+		char c ;
+		while ((c = getchar()) != '\n' && c != EOF) ;
 	}
 	printf("Goodbye!\n") ;
 	return 0 ;
 }
+
+
+void pathOneOne(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
+	int brandIndex ;
+	printf("Enter the sales data for a single brand on a single day:\n") ;
+	scanf(" %d", &brandIndex) ;
+	for (int typeIndex = 0 ; typeIndex < NUM_OF_TYPES ; typeIndex++) {
+		scanf(" %d", &sales[typeIndex]) ;
+	}
+	updateCube(cube, days, &brandIndex, sales) ;
+	dayCounter(days, &brandIndex) ;
+}
+
+
+int brandsPopulated(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) {
+	int complete = 1 ;
+	for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
+		if (days[i] < DAYS_IN_YEAR - 1 && cube[days[i]][i][0] == -1) {
+			if (complete) {
+				printf("No data for brands") ;
+			}
+			printf(" %s", brands[i]) ;
+			complete = 0 ;
+		}
+	}
+	printf("\nPlease complete the data\n") ;
+	return complete ;
+}
+
+
+void pathTwoAll(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
+	int brandIndex ;
+	while (!brandsPopulated(cube, days)) {
+		if (scanf(" %d", &brandIndex) == 1) {
+			for (int typeIndex = 0 ; typeIndex < NUM_OF_TYPES ; typeIndex++) {
+				scanf(" %d", &sales[typeIndex]) ;
+			}
+			updateCube(cube, days, &brandIndex, sales) ;
+		}	
+	}
+	dayCounter(days, NULL) ;
+}
+
+// void pathThreeStat() {}
+// void pathFourDisplay( {}
+// void pathFiveInsight() {}
+// void pathSixDelta() {}
