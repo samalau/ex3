@@ -106,10 +106,9 @@ void printMenu(){
 
 
 int main() {
-	int brandIndex, typeIndex ;
-	int sales[NUM_OF_TYPES]  ;
 	int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES] ;
 	int days[NUM_OF_BRANDS] = {0} ;
+	int sales[NUM_OF_TYPES]  ;
 	initCube(cube, -1) ;
 	int choice = 0 ;
 	while(choice != done){
@@ -118,7 +117,7 @@ int main() {
 				printf("Goodbye!\n") ;
 				break ;
 			case addOne:
-				//...
+				pathOneOne(cube, days, sales) ;
 				break ;
 			case addAll:
 				//...
