@@ -24,12 +24,19 @@ char types[NUM_OF_TYPES][TYPES_NAMES] = {"SUV", "Sedan", "Coupe", "GT"} ;
 
 void pathOneOne(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) ;
 void pathTwoAll(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) ;
+void pathThreeStat() ;
 
+// void pathFourDisplay() ;
+// void pathFiveInsight() ;
+// void pathSixDelta() ;
 
-// void pathThreeStat()
-// void pathFourDisplay()
-// void pathFiveInsight()
-// void pathSixDelta()
+// void totalSaleSum() {
+
+// }
+
+// void getMaximum() {
+
+// }
 
 void dayCounter(int days[NUM_OF_BRANDS], int* brandIndex) {
 	if (brandIndex == NULL) {
@@ -162,6 +169,7 @@ void pathTwoAll(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 	}
 	dayCounter(days, NULL) ;
 }
+
 
 void pathThreeStat() {
 	int c, yom ;
