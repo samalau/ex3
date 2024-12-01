@@ -163,7 +163,24 @@ void pathTwoAll(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 	dayCounter(days, NULL) ;
 }
 
-// void pathThreeStat() {}
+void pathThreeStat() {
+	int c, yom ;
+	int display = 0 ;
+	printf("What day would you like to analyze?\n");
+		while (!display) {
+		if (scanf(" %d", &yom) == 1 && yom >= 0 && yom < DAYS_IN_YEAR) {
+			
+		} else {
+			while ((c = getchar()) != '\n' && c != EOF) ;
+			continue ;
+		}
+	}
+
+}
+
+
 // void pathFourDisplay( {}
+
 // void pathFiveInsight() {}
+
 // void pathSixDelta() {}
