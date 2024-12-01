@@ -22,19 +22,27 @@ Assignment: ex3
 char brands[NUM_OF_BRANDS][BRANDS_NAMES] = {"Toyoga", "HyunNight", "Mazduh", "FolksVegan", "Key-Yuh"} ;
 char types[NUM_OF_TYPES][TYPES_NAMES] = {"SUV", "Sedan", "Coupe", "GT"} ;
 
-void pathOneOne(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) ;
-void pathTwoAll(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) ;
-void pathThreeStat() ;
+void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) ;
+void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) ;
+void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES]) ;
 
-// void pathFourDisplay() ;
-// void pathFiveInsight() ;
-// void pathSixDelta() ;
+// void _4_EntireData() ;
+// void _5_simpleInsight() ;
+// void _6_avgDelta() ;
 
-// void totalSaleSum() {
+int getSum(const int *array, int size) {
+	int sum = 0 ;
+	for (int i = 0 ; i < size ; i++) {
+		for (int j = 0 ; j < size ; j++) {
+			for (int k = 0 ; k < size ; k++) {
+				sum += array[i] ;
+			}
+		}
+	}
+	return sum ;
+}
 
-// }
-
-// void getMaximum() {
+// void getMax() {
 
 // }
 
@@ -95,28 +103,29 @@ int main() {
 	int choice = 0 ;
 	while(choice != done) {
 		printMenu() ;
-		scanf(" %d", &choice) ;  // consider validating
+		// assumes input positive integer choice
+		scanf(" %d", &choice) ;
 		switch(choice){
 			case done:
 				printf("Goodbye!\n") ;
 				break ;
 			case addOne:
-				pathOneOne(cube, days, sales) ;
+				_1_enterSingle(cube, days, sales) ;
 				break ;
 			case addAll:
-				pathTwoAll(cube, days, sales) ;
+				_2_enterEvery(cube, days, sales) ;
 				break ;
 			case stats:
-				//...
+				_3_dayStat(cube) ;
 				break ;
 			case print:
-				//...
+				// _4_EntireData() ;
 				break ;
 			case insights:
-				//...
+				// _5_simpleInsight() ;
 				break ;
 			case deltas:
-				//...
+				// _6_avgDelta() ;
 				break ;
 			default:
 				printf("Invalid input\n") ;
@@ -129,7 +138,7 @@ int main() {
 }
 
 
-void pathOneOne(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
+void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
 	int brandIndex ;
 	printf("Enter the sales data for a single brand on a single day:\n") ;
 	scanf(" %d", &brandIndex) ;
@@ -157,7 +166,7 @@ int brandsPopulated(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day
 }
 
 
-void pathTwoAll(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
+void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
 	int brandIndex ;
 	while (!brandsPopulated(cube, days)) {
 		if (scanf(" %d", &brandIndex) == 1) {
@@ -165,19 +174,30 @@ void pathTwoAll(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 				scanf(" %d", &sales[typeIndex]) ;
 			}
 			updateCube(cube, days, &brandIndex, sales) ;
-		}	
+		}
 	}
 	dayCounter(days, NULL) ;
 }
 
 
-void pathThreeStat() {
+void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES]) {
 	int c, yom ;
 	int display = 0 ;
 	printf("What day would you like to analyze?\n");
 	while (!display) {
 		if (scanf(" %d", &yom) == 1 && yom >= 0 && yom < DAYS_IN_YEAR) {
-			
+			int sum = 0 ;
+			for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
+				if (i != -1) {
+					for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
+						if (i != -1) {
+							sum += cube[yom][i][j] ;
+						}
+					}
+				}
+			}
+			printf("sum is %d\n", sum) ;
+			//getSum(cube[yom], )
 		} else {
 			while ((c = getchar()) != '\n' && c != EOF) ;
 			printf("Please enter a valid day\n"
@@ -189,8 +209,8 @@ void pathThreeStat() {
 }
 
 
-// void pathFourDisplay( {}
+// void _4_EntireData() {}
 
-// void pathFiveInsight() {}
+// void _5_simpleInsight() {}
 
-// void pathSixDelta() {}
+// void _6_avgDelta() {}
