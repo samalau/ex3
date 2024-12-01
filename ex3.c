@@ -30,13 +30,11 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES]) ;
 // void _5_simpleInsight() ;
 // void _6_avgDelta() ;
 
-int getSum(const int *array, int size) {
+int getSum(const int *array) {
 	int sum = 0 ;
 	for (int i = 0 ; i < size ; i++) {
 		for (int j = 0 ; j < size ; j++) {
-			for (int k = 0 ; k < size ; k++) {
-				sum += array[i] ;
-			}
+			sum += array[i];
 		}
 	}
 	return sum ;
@@ -181,23 +179,23 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 
 
 void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES]) {
-	int c, yom ;
+	int c, yom, next;
 	int display = 0 ;
 	printf("What day would you like to analyze?\n");
 	while (!display) {
 		if (scanf(" %d", &yom) == 1 && yom >= 0 && yom < DAYS_IN_YEAR) {
 			int sum = 0 ;
 			for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
-				if (i != -1) {
-					for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
-						if (i != -1) {
-							sum += cube[yom][i][j] ;
-						}
+				for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
+					int next = cube[yom][i][j] ;
+					if (next != -1) {
+						sum += next ;
 					}
 				}
 			}
+			display = 1 ;
 			printf("sum is %d\n", sum) ;
-			//getSum(cube[yom], )
+			getSum(cube[yom])
 		} else {
 			while ((c = getchar()) != '\n' && c != EOF) ;
 			printf("Please enter a valid day\n"
