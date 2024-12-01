@@ -24,8 +24,8 @@ char types[NUM_OF_TYPES][TYPES_NAMES] = {"SUV", "Sedan", "Coupe", "GT"} ;
 
 
 void pathOneOne(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
-	int brandIndex, sales[NUM_OF_TYPES] ;
-	printf("") ;
+	int brandIndex ;
+	printf("Enter the sales data for a single brand on a single day:\n") ;
 	scanf(" %d", &brandIndex) ;
 	for (int typeIndex = 0 ; typeIndex < NUM_OF_TYPES ; typeIndex++) {
 		scanf(" %d", &sales[typeIndex]) ;
@@ -35,25 +35,25 @@ void pathOneOne(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 }
 
 
-void pathTwo() {
+// void pathTwo() {
 	
-}
+// }
 
-void pathOneOne() {
+// void pathOneOne() {
 	
-}
+// }
 
-void pathOneOne() {
+// void pathOneOne() {
 	
-}
+// }
 
-void pathOneOne() {
+// void pathOneOne() {
 	
-}
+// }
 
-void pathOneOne() {
+// void pathOneOne() {
 	
-}
+// }
 
 
 void dayCounter(int days[NUM_OF_BRANDS], int* brands, int* brandIndex) {
@@ -108,10 +108,10 @@ void printMenu(){
 int main() {
 	int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES] ;
 	int days[NUM_OF_BRANDS] = {0} ;
-	int sales[NUM_OF_TYPES]  ;
+	int sales[NUM_OF_TYPES] ;
 	initCube(cube, -1) ;
 	int choice = 0 ;
-	while(choice != done){
+	while(choice != done) {
 		switch(choice){
 			case done:
 				printf("Goodbye!\n") ;
