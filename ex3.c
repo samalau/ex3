@@ -167,11 +167,13 @@ void pathThreeStat() {
 	int c, yom ;
 	int display = 0 ;
 	printf("What day would you like to analyze?\n");
-		while (!display) {
+	while (!display) {
 		if (scanf(" %d", &yom) == 1 && yom >= 0 && yom < DAYS_IN_YEAR) {
 			
 		} else {
 			while ((c = getchar()) != '\n' && c != EOF) ;
+			printf("Please enter a valid day\n"
+					"Which day would you like to analyze?\n") ;
 			continue ;
 		}
 	}
