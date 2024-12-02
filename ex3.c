@@ -146,7 +146,7 @@ int main() {
 				_3_dayStat(cube, days) ;
 				break ;
 			case print:
-				// _4_EntireData(cube) ;
+				_4_EntireData(cube) ;
 				break ;
 			case insights:
 				// _5_simpleInsight() ;
