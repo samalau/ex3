@@ -22,17 +22,51 @@ Assignment: ex3
 char brands[NUM_OF_BRANDS][BRANDS_NAMES] = {"Toyoga", "HyunNight", "Mazduh", "FolksVegan", "Key-Yuh"} ;
 char types[NUM_OF_TYPES][TYPES_NAMES] = {"SUV", "Sedan", "Coupe", "GT"} ;
 
+// void getMax() ;
+int getSum(const int *array, int size) ;
+void flattenCubeSlice (const int *cube, int specificDay, int brandSize, int typeSize, int *flattened) ;
+
+void dayCounter(int days[NUM_OF_BRANDS], int *brandIndex) ;
+void updateCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int *brandIndex, int sales[NUM_OF_TYPES]) ;
+
+int brandsPopulated(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) ;
+
+void initDays(int days[NUM_OF_BRANDS], int initAsValue) ;
+void initSales(int sales[NUM_OF_TYPES], int initAsValue) ;
+void initCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int initAsValue) ;
+
+void printMenu() ;
+
 void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) ;
 void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) ;
 void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) ;
-
 // void _4_EntireData() ;
-
 // void _5_simpleInsight() ;
 // void _6_avgDelta() ;
 
 
-// void getMax() ;
+// void getMax() {}
+
+
+int getSum(const int *array, int size) {
+	int sum = 0 ;
+	for (int i = 0 ; i < size ; i++) {
+		if (array[i] != -1) {
+			sum += array[i];
+		}
+	}
+	return sum ;
+}
+
+
+void flattenCubeSlice (const int *cube, int specificDay, int brandSize, int typeSize, int *flattened) {
+	int ind = 0 ;
+	for (int i = 0 ; i < brandSize ; i++) {
+		for (int j = 0 ; j < typeSize ; j++) {
+			flattened[ind++] = cube[(specificDay * brandSize * typeSize) + (i * typeSize) + j] ;
+		}
+	}
+}
 
 
 void dayCounter(int days[NUM_OF_BRANDS], int *brandIndex) {
@@ -71,6 +105,20 @@ void initCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int initAsVal
 }
 
 
+void initSales(int sales[NUM_OF_TYPES], int initAsValue) {
+	for (int i = 0 ; i < NUM_OF_TYPES ; i++) {
+		sales[i] = -1 ;
+	}
+}
+
+
+void initDays(int days[NUM_OF_BRANDS], int initAsValue) {
+	for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
+		days[i] = -1 ;
+	}
+}
+
+
 void printMenu(){
 	printf("Welcome to the Cars Data Cube! What would you like to do?\n"
 		   "1.Enter Daily Data For A Brand\n"
@@ -84,9 +132,11 @@ void printMenu(){
 
 
 int main() {
-	int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES] ;
-	int days[NUM_OF_BRANDS] = {-1} ;
+	int days[NUM_OF_BRANDS] ;
+	initDays(days, -1) ;
 	int sales[NUM_OF_TYPES] ;
+	initSales(sales, -1) ;
+	int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES] ;
 	initCube(cube, -1) ;
 	int choice = 0 ;
 	while(choice != done) {
@@ -165,27 +215,6 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 		}
 	}
 	dayCounter(days, NULL) ;
-}
-
-
-int getSum(const int *array, int size) {
-	int sum = 0 ;
-	for (int i = 0 ; i < size ; i++) {
-		if (array[i] != -1) {
-			sum += array[i];
-		}
-	}
-	return sum ;
-}
-
-
-void flattenCubeSlice (const int *cube, int specificDay, int brandSize, int typeSize, int *flattened) {
-	int ind = 0 ;
-	for (int i = 0 ; i < brandSize ; i++) {
-		for (int j = 0 ; j < typeSize ; j++) {
-			flattened[ind++] = cube[(specificDay * brandSize * typeSize) + (i * typeSize) + j] ;
-		}
-	}
 }
 
 
@@ -298,6 +327,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 // ...
 // "\n\n*****************************************\n")
 // }
+
 
 // void _5_simpleInsight() {}
 
