@@ -311,7 +311,7 @@ void _4_EntireData(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES]) {
 			printf("\nDay %d-", i) ;
 			for (int k = 0 ; k < NUM_OF_TYPES ; k++) {
 				if (cube[i][j][k] > -1) {
-					printf(" %s: %d", types[k]) ;
+					printf(" %s: %d", types[k], cube[i][j][k]) ;
 				}
 			}
 		}
