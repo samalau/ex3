@@ -128,10 +128,12 @@ int main() {
 	int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES] ;
 	initCube(cube, -1) ;
 	int choice = 0 ;
+	int c ;
 	while(choice != done) {
 		printMenu() ;
-		// assumes input positive integer choice
-		scanf(" %d", &choice) ;
+		if (scanf(" %d", &choice) != 1 && (c = getchar()) != '\n' && c != EOF) {
+			choice = 0 ;
+		}
 		switch(choice){
 			case done:
 				printf("Goodbye!\n") ;
@@ -157,7 +159,6 @@ int main() {
 			default:
 				printf("Invalid input\n") ;
 		}
-		int c ;
 		while ((c = getchar()) != '\n' && c != EOF) ;
 	}
 	printf("Goodbye!\n") ;
@@ -198,6 +199,8 @@ int brandsPopulated(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day
 	}
 	if (!complete) {
 		printf("\nPlease complete the data\n") ;
+		int c ;
+		while ((c = getchar()) != '\n' && c != EOF) ;
 	}
 	return complete ;
 }
