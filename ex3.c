@@ -167,12 +167,17 @@ int main() {
 
 void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
 	int brandIndex ;
+	int invalid = 0 ;
 	printf("Enter the sales data for a single brand on a single day:\n") ;
 	if (scanf(" %d", &brandIndex) == 1 && brandIndex >= 0 && brandIndex < NUM_OF_BRANDS) {
 		for (int typeIndex = 0 ; typeIndex < NUM_OF_TYPES ; typeIndex++) {
-			scanf(" %d", &sales[typeIndex]) ;
+			if (scanf(" %d", &sales[typeIndex]) != 1 || sales[typeIndex] < 0) {
+				invalid = 1 ;
+				break ;
 		}
-		updateCube(cube, days, &brandIndex, sales) ;
+		if (!invalid) {
+			updateCube(cube, days, &brandIndex, sales) ;
+		}
 	}
 }
 
@@ -211,7 +216,7 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 			int tryAnother = 0 ;
 			if (scanf(" %d", &brandIndex) == 1 && brandIndex >= 0 && brandIndex < NUM_OF_BRANDS) {
 				for (int typeIndex = 0 ; typeIndex < NUM_OF_TYPES ; typeIndex++) {
-					if (scanf(" %d", &sales[typeIndex]) != 1) {
+					if (scanf(" %d", &sales[typeIndex]) != 1 || sales[typeIndex] < 0) {
 						tryAnother = 1 ;
 						break ;
 					}
