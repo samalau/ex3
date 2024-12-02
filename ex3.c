@@ -28,7 +28,7 @@ void flattenCubeSlice (const int *cube, int specificDay, int brandSize, int type
 
 void updateCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int *brandIndex, int sales[NUM_OF_TYPES]) ;
 
-int brandsPopulated(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int *brandIndex) ;
+int brandsPopulated(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) ;
 
 void initDays(int days[NUM_OF_BRANDS], int initAsValue) ;
 void initSales(int sales[NUM_OF_TYPES], int initAsValue) ;
@@ -157,7 +157,7 @@ int main() {
 			default:
 				printf("Invalid input\n") ;
 		}
-		char c ;
+		int c ;
 		while ((c = getchar()) != '\n' && c != EOF) ;
 	}
 	printf("Goodbye!\n") ;
@@ -176,10 +176,7 @@ void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day
 }
 
 
-int brandsPopulated(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int *brandIndex) {
-	if (brandIndex == NULL || *brandIndex < 0 || *brandIndex > NUM_OF_BRANDS - 1) {
-		return 0 ;
-	}
+int brandsPopulated(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) {
 	int complete = 1 ;
 	int beganState = 0 ;
 	for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
@@ -191,6 +188,9 @@ int brandsPopulated(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day
 			printf(" %s", brands[i]) ;
 			complete = 0 ;
 		}
+	}
+	if (!complete) {
+
 	}
 	printf("\nPlease complete the data\n") ;
 	return complete ;
@@ -205,10 +205,10 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 			break ;
 		}
 	}
-	int brandIndex = -1 ;
 	if (valid) {
-		while (!brandsPopulated(cube, days, NULL)) {
-			if (scanf(" %d", &brandIndex) == 1) {
+		int brandIndex;
+		while (!brandsPopulated(cube, days)) {
+			if (scanf(" %d", &brandIndex) == 1 && brandIndex >= 0 && brandIndex < NUM_OF_BRANDS) {
 				for (int typeIndex = 0 ; typeIndex < NUM_OF_TYPES ; typeIndex++) {
 					scanf(" %d", &sales[typeIndex]) ;
 				}
