@@ -47,8 +47,6 @@ void dayCounter(int days[NUM_OF_BRANDS], int *brandIndex) {
 }
 
 
-
-
 void updateCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int *brandIndex, int sales[NUM_OF_TYPES]) {
 	if (*brandIndex < 0 || *brandIndex > NUM_OF_BRANDS - 1) {
 		printf("This brand is not valid\n") ;
@@ -198,8 +196,8 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES]) {
 	int display = 0 ;
 	printf("What day would you like to analyze?\n");
 	while (!display) {
-		if (scanf(" %d", &yom) == 1 && yom >= 0 && yom < DAYS_IN_YEAR) {
-
+		if (scanf(" %d", &yom) == 1 && yom >= 0 && yom < DAYS_IN_YEAR && cube[yom][0][0] > -1) {
+			
 			int brandSize = sizeof(cube[yom]) / sizeof(cube[yom][0]) ;
 			int typeSize = sizeof(cube[yom][0]) / sizeof(cube[yom][0][0]) ;
 			
@@ -210,49 +208,47 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES]) {
 
 			int i = 0, j = 0;
 			int bestBrand = 0 ;
-			int total_brand = 0 ;
+			int bestBrand_sales = 0 ;
 			int previousTotal_brand = 0 ;
 			for (i = 0 ; i < NUM_OF_BRANDS ; i++) {
 				for (j = 0 ; j < NUM_OF_TYPES ; j++) {
 					if (cube[yom][i][j] != -1) {
-						total_brand += cube[yom][i][j] ;
+						bestBrand_sales += cube[yom][i][j] ;
 					}
 				}
 				// QUE: what if equally best?
-				if (total_brand > previousTotal_brand) {
-					previousTotal_brand = total_brand ;
+				if (bestBrand_sales > previousTotal_brand) {
+					previousTotal_brand = bestBrand_sales ;
 					bestBrand = i ;
 				}
 			}
-			int bestBrand_sales = total_brand ;
-			char bestBrand_name[BRANDS_NAMES] = brands[i] ;
 
 			// TODO: combine above and below
-
+			
 			int bestType = 0 ;
-			int total_type = 0 ;
+			int bestType__sales = 0 ;
 			int previousTotal_type = 0 ;
 			for (j = 0 ; j < NUM_OF_TYPES ; j++) {
 				for (i = 0 ; i < NUM_OF_BRANDS ; i++) {
 					if (cube[yom][i][j] != -1) {
-						total_type += cube[yom][i][j] ;
+						bestType__sales += cube[yom][i][j] ;
 					}
 				}
 				// QUE: what if equally best?
-				if (total_type > previousTotal_type) {
-					previousTotal_type = total_type ;
+				if (bestType__sales > previousTotal_type) {
+					previousTotal_type = bestType__sales ;
 					bestType = j ;
 				}
 			}
-			int bestType__sales = total_type ;
-			char bestType_name[TYPES_NAMES] = types[j] ;
-
 			display = 1 ;
 			printf("In day number %d:\n"
 					"The sales total was %d\n"
 					"The best sold brand with %d sales was %s\n"
 					"The best sold type with %d sales was %s\n",
-					yom, salesTotal, bestBrand_sales, bestBrand_name, bestType__sales, bestType_name) ;
+					yom,
+					salesTotal,
+					bestBrand_sales, brands[bestBrand],
+					bestType__sales, types[bestType]) ;
 		} else {
 			while ((c = getchar()) != '\n' && c != EOF) ;
 			printf("Please enter a valid day\n"
