@@ -183,41 +183,76 @@ int getSum(const int *array, int size) {
 }
 
 
-
-void flattenCubeSlice (const int *cube, int slice, int brandSize, int typeSize, int *flattened) {
+void flattenCubeSlice (const int *cube, int specificDay, int brandSize, int typeSize, int *flattened) {
 	int ind = 0 ;
 	for (int i = 0 ; i < brandSize ; i++) {
 		for (int j = 0 ; j < typeSize ; j++) {
-			flattened[ind++] = cube[(slice * brandSize * typeSize) + (i * typeSize) + j] ;
+			flattened[ind++] = cube[(specificDay * brandSize * typeSize) + (i * typeSize) + j] ;
 		}
 	}
 }
 
 
 void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES]) {
-	int c, yom, next;
+	int c, yom ;
 	int display = 0 ;
 	printf("What day would you like to analyze?\n");
 	while (!display) {
 		if (scanf(" %d", &yom) == 1 && yom >= 0 && yom < DAYS_IN_YEAR) {
+
 			int brandSize = sizeof(cube[yom]) / sizeof(cube[yom][0]) ;
 			int typeSize = sizeof(cube[yom][0]) / sizeof(cube[yom][0][0]) ;
+			
 			int flattened[brandSize * typeSize] ;
 			flattenedCubeSlice((const int *)cube, yom, brandSize, typeSize, flattened) ;
-			int flatSliceSize = sideof(flattened) / size(flattened[0]) ;
+			int flatSliceSize = sizeof(flattened) / sizeof(flattened[0]) ;
 			int salesTotal = getSum(flattened, flatSliceSize) ;
-			int salesTotal ;
-			int bestBrand_salesAmount ;
-			int bestBrand_name ;
-			int bestType__salesAmount ;
-			int bestType_name ;
-			
+
+			int i = 0, j = 0;
+			int bestBrand = 0 ;
+			int total_brand = 0 ;
+			int previousTotal_brand = 0 ;
+			for (i = 0 ; i < NUM_OF_BRANDS ; i++) {
+				for (j = 0 ; j < NUM_OF_TYPES ; j++) {
+					if (cube[yom][i][j] != -1) {
+						total_brand += cube[yom][i][j] ;
+					}
+				}
+				// QUE: what if equally best?
+				if (total_brand > previousTotal_brand) {
+					previousTotal_brand = total_brand ;
+					bestBrand = i ;
+				}
+			}
+			int bestBrand_sales = total_brand ;
+			char bestBrand_name = brands[i] ;
+
+			// TODO: combine above and below
+
+			int bestType = 0 ;
+			int total_type = 0 ;
+			int previousTotal_type = 0 ;
+			for (j = 0 ; j < NUM_OF_TYPES ; j++) {
+				for (i = 0 ; i < NUM_OF_BRANDS ; i++) {
+					if (cube[yom][i][j] != -1) {
+						total_type += cube[yom][i][j] ;
+					}
+				}
+				// QUE: what if equally best?
+				if (total_type > previousTotal_type) {
+					previousTotal_type = total_type ;
+					bestType = j ;
+				}
+			}
+			int bestType__sales = total_type ;
+			char bestType_name = types[j] ;
+
 			display = 1 ;
 			printf("In day number %d:\n"
 					"The sales total was %d\n"
 					"The best sold brand with %d sales was %s\n"
 					"The best sold type with %d sales was %s\n",
-					yom, salesTotal, bestBrand_salesAmount, bestBrand_name, bestType__salesAmount, bestType_name) ;
+					yom, salesTotal, bestBrand_sales, bestBrand_name, bestType__sales, bestType_name) ;
 			
 		} else {
 			while ((c = getchar()) != '\n' && c != EOF) ;
