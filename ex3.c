@@ -26,10 +26,9 @@ char types[NUM_OF_TYPES][TYPES_NAMES] = {"SUV", "Sedan", "Coupe", "GT"} ;
 int getSum(const int *array, int size) ;
 void flattenCubeSlice (const int *cube, int specificDay, int brandSize, int typeSize, int *flattened) ;
 
-void dayCounter(int days[NUM_OF_BRANDS], int *brandIndex) ;
 void updateCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int *brandIndex, int sales[NUM_OF_TYPES]) ;
 
-int brandsPopulated(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) ;
+int brandsPopulated(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int *brandIndex) ;
 
 void initDays(int days[NUM_OF_BRANDS], int initAsValue) ;
 void initSales(int sales[NUM_OF_TYPES], int initAsValue) ;
@@ -69,26 +68,15 @@ void flattenCubeSlice (const int *cube, int specificDay, int brandSize, int type
 }
 
 
-void dayCounter(int days[NUM_OF_BRANDS], int *brandIndex) {
-	if (brandIndex == NULL) {
-		for (int i = 0  ; i < NUM_OF_BRANDS  ; i++) {
-			days[i]++ ;
-		}
-	} else {
-		days[*brandIndex]++ ;
-	}
-}
-
-
 void updateCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int *brandIndex, int sales[NUM_OF_TYPES]) {
 	if (*brandIndex < 0 || *brandIndex > NUM_OF_BRANDS - 1) {
 		printf("This brand is not valid\n") ;
 	} else {
-		int currentDay = days[*brandIndex] ;
-		if (currentDay < DAYS_IN_YEAR) {
+		if (days[*brandIndex] < DAYS_IN_YEAR - 1) {
 			for (int typeIndex = 0 ; typeIndex < NUM_OF_TYPES ; typeIndex++) {
-				cube[currentDay][*brandIndex][typeIndex] = sales[typeIndex] ;
+				cube[days[*brandIndex]][*brandIndex][typeIndex] = sales[typeIndex] ;
 			}
+			days[*brandIndex]++ ;
 		}
 	}	
 }
@@ -184,16 +172,20 @@ void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day
 		scanf(" %d", &sales[typeIndex]) ;
 	}
 	updateCube(cube, days, &brandIndex, sales) ;
-	dayCounter(days, &brandIndex) ;
 }
 
 
-int brandsPopulated(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) {
+int brandsPopulated(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int *brandIndex) {
+	if (brandIndex == NULL || *brandIndex < 0 || *brandIndex > NUM_OF_BRANDS - 1) {
+		return 0 ;
+	}
 	int complete = 1 ;
+	int beganState = 0 ;
 	for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
 		if (days[i] == -1 || (days[i] >= 0 && days[i] < DAYS_IN_YEAR - 1 && cube[days[i]][i][0] == -1)) {
-			if (complete) {
+			if (!beganState) {
 				printf("No data for brands") ;
+				beganState = 1 ;
 			}
 			printf(" %s", brands[i]) ;
 			complete = 0 ;
@@ -205,7 +197,6 @@ int brandsPopulated(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day
 
 
 void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
-	int brandIndex ;
 	int valid = 0 ;
 	for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
 		if (days[i] < DAYS_IN_YEAR - 1) {
@@ -213,8 +204,9 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 			break ;
 		}
 	}
+	int brandIndex = -1 ;
 	if (valid) {
-		while (!brandsPopulated(cube, days)) {
+		while (!brandsPopulated(cube, days, NULL)) {
 			if (scanf(" %d", &brandIndex) == 1) {
 				for (int typeIndex = 0 ; typeIndex < NUM_OF_TYPES ; typeIndex++) {
 					scanf(" %d", &sales[typeIndex]) ;
@@ -222,7 +214,6 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 				updateCube(cube, days, &brandIndex, sales) ;
 			}
 		}
-		dayCounter(days, NULL) ;
 	}
 }
 
