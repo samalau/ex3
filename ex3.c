@@ -131,8 +131,9 @@ int main() {
 	int c ;
 	while(choice != done) {
 		printMenu() ;
-		if (scanf(" %d", &choice) != 1 && (c = getchar()) != '\n' && c != EOF) {
+		if (scanf(" %d", &choice) != 1 || ((c = getchar()) != '\n' && c != EOF)) {
 			choice = 0 ;
+			while ((c = getchar()) != '\n' && c != EOF) ;
 		}
 		switch(choice){
 			case done:
@@ -181,6 +182,8 @@ void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day
 			updateCube(cube, days, &brandIndex, sales) ;
 		}
 	}
+	int c ;
+	while ((c = getchar()) != '\n' && c != EOF) ;
 }
 
 
@@ -199,8 +202,6 @@ int brandsPopulated(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day
 	}
 	if (!complete) {
 		printf("\nPlease complete the data\n") ;
-		int c ;
-		while ((c = getchar()) != '\n' && c != EOF) ;
 	}
 	return complete ;
 }
