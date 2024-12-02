@@ -174,6 +174,7 @@ void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day
 			if (scanf(" %d", &sales[typeIndex]) != 1 || sales[typeIndex] < 0) {
 				invalid = 1 ;
 				break ;
+			}
 		}
 		if (!invalid) {
 			updateCube(cube, days, &brandIndex, sales) ;
