@@ -24,17 +24,16 @@ char types[NUM_OF_TYPES][TYPES_NAMES] = {"SUV", "Sedan", "Coupe", "GT"} ;
 
 void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) ;
 void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) ;
-void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES]) ;
+void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) ;
 
 // void _4_EntireData() ;
+
 // void _5_simpleInsight() ;
 // void _6_avgDelta() ;
 
 
+// void getMax() ;
 
-// void getMax() {
-
-// }
 
 void dayCounter(int days[NUM_OF_BRANDS], int *brandIndex) {
 	if (brandIndex == NULL) {
@@ -57,7 +56,6 @@ void updateCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 				cube[currentDay][*brandIndex][typeIndex] = sales[typeIndex] ;
 			}
 		}
-		// else {}
 	}	
 }
 
@@ -87,7 +85,7 @@ void printMenu(){
 
 int main() {
 	int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES] ;
-	int days[NUM_OF_BRANDS] = {0} ;
+	int days[NUM_OF_BRANDS] = {-1} ;
 	int sales[NUM_OF_TYPES] ;
 	initCube(cube, -1) ;
 	int choice = 0 ;
@@ -106,10 +104,10 @@ int main() {
 				_2_enterEvery(cube, days, sales) ;
 				break ;
 			case stats:
-				_3_dayStat(cube) ;
+				_3_dayStat(cube, days) ;
 				break ;
 			case print:
-				// _4_EntireData() ;
+				// _4_EntireData(cube) ;
 				break ;
 			case insights:
 				// _5_simpleInsight() ;
@@ -191,75 +189,115 @@ void flattenCubeSlice (const int *cube, int specificDay, int brandSize, int type
 }
 
 
-void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES]) {
-	int c, yom ;
+void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) {
+
 	int display = 0 ;
-	printf("What day would you like to analyze?\n");
+
+	printf("What day would you like to analyze?\n") ;
+
 	while (!display) {
-		if (scanf(" %d", &yom) == 1 && yom >= 0 && yom < DAYS_IN_YEAR && cube[yom][0][0] > -1) {
-			
-			int brandSize = sizeof(cube[yom]) / sizeof(cube[yom][0]) ;
-			int typeSize = sizeof(cube[yom][0]) / sizeof(cube[yom][0][0]) ;
-			
-			int flattened[brandSize * typeSize] ;
-			flattenCubeSlice((const int *)cube, yom, brandSize, typeSize, flattened) ;
-			int flatSliceSize = sizeof(flattened) / sizeof(flattened[0]) ;
-			int salesTotal = getSum(flattened, flatSliceSize) ;
 
-			int i = 0, j = 0;
-			int bestBrand = 0 ;
-			int bestBrand_sales = 0 ;
-			int previousTotal_brand = 0 ;
-			for (i = 0 ; i < NUM_OF_BRANDS ; i++) {
-				for (j = 0 ; j < NUM_OF_TYPES ; j++) {
-					if (cube[yom][i][j] != -1) {
-						bestBrand_sales += cube[yom][i][j] ;
-					}
-				}
-				// QUE: what if equally best?
-				if (bestBrand_sales > previousTotal_brand) {
-					previousTotal_brand = bestBrand_sales ;
-					bestBrand = i ;
+		int valid = 0, yom = -1;
+
+		if (scanf(" %d", &yom) == 1) {
+			for (int k = 0 ; k < NUM_OF_BRANDS ; k++) {
+				// CONSIDER: not including && days[k] < DAYS_IN_YEAR
+				if (days[k] > -1 && yom <= days[k] && yom >= 0 && yom < DAYS_IN_YEAR && days[k] < DAYS_IN_YEAR) {
+					valid = 1 ;
+					break ;
 				}
 			}
+		}
 
-			// TODO: combine above and below
-			
-			int bestType = 0 ;
-			int bestType__sales = 0 ;
-			int previousTotal_type = 0 ;
-			for (j = 0 ; j < NUM_OF_TYPES ; j++) {
-				for (i = 0 ; i < NUM_OF_BRANDS ; i++) {
-					if (cube[yom][i][j] != -1) {
-						bestType__sales += cube[yom][i][j] ;
-					}
-				}
-				// QUE: what if equally best?
-				if (bestType__sales > previousTotal_type) {
-					previousTotal_type = bestType__sales ;
-					bestType = j ;
-				}
-			}
-			display = 1 ;
-			printf("In day number %d:\n"
-					"The sales total was %d\n"
-					"The best sold brand with %d sales was %s\n"
-					"The best sold type with %d sales was %s\n",
-					yom,
-					salesTotal,
-					bestBrand_sales, brands[bestBrand],
-					bestType__sales, types[bestType]) ;
-		} else {
+		if (!valid) {
+			int c;
 			while ((c = getchar()) != '\n' && c != EOF) ;
 			printf("Please enter a valid day\n"
 					"Which day would you like to analyze?\n") ;
 			continue ;
 		}
+
+		int brandSize = sizeof(cube[yom]) / sizeof(cube[yom][0]) ;
+		int typeSize = sizeof(cube[yom][0]) / sizeof(cube[yom][0][0]) ;
+		
+		int flattened[brandSize * typeSize] ;
+		flattenCubeSlice((const int *)cube, yom, brandSize, typeSize, flattened) ;
+		int flatSliceSize = sizeof(flattened) / sizeof(flattened[0]) ;
+		int salesTotal = getSum(flattened, flatSliceSize) ;
+
+		int i = 0, j = 0 ;
+		int bestBrand = 0 ;
+		int bestBrand_sales = 0 ;
+		int previousTotal_brand = 0 ;
+		
+		for (i = 0 ; i < NUM_OF_BRANDS ; i++) {
+			for (j = 0 ; j < NUM_OF_TYPES ; j++) {
+				if (cube[yom][i][j] != -1) {
+					bestBrand_sales += cube[yom][i][j] ;
+				}
+			}
+			// QUE: what if equally best?
+			if (bestBrand_sales > previousTotal_brand) {
+				previousTotal_brand = bestBrand_sales ;
+				bestBrand = i ;
+			}
+		}
+
+		// TODO: combine above and below
+
+		int bestType = 0 ;
+		int bestType__sales = 0 ;
+		int previousTotal_type = 0 ;
+		for (j = 0 ; j < NUM_OF_TYPES ; j++) {
+			for (i = 0 ; i < NUM_OF_BRANDS ; i++) {
+				if (cube[yom][i][j] != -1) {
+					bestType__sales += cube[yom][i][j] ;
+				}
+			}
+			// QUE: what if equally best?
+			if (bestType__sales > previousTotal_type) {
+				previousTotal_type = bestType__sales ;
+				bestType = j ;
+			}
+		}
+		display = 1 ;
+		printf("In day number %d:\n"
+				"The sales total was %d\n"
+				"The best sold brand with %d sales was %s\n"
+				"The best sold type with %d sales was %s\n",
+				yom,
+				salesTotal,
+				bestBrand_sales, brands[bestBrand],
+				bestType__sales, types[bestType]) ;
 	}
 }
 
 
-// void _4_EntireData() {}
+// void _4_EntireData(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES]) {
+// 	for (int i = 0 ; i < DAYS_IN_YEAR ; i++) {
+// 		for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
+// 			if (cube[i][j][] )
+// 			"Sales for %s:\n", brands[i]
+// 		}
+// 	}
+// "*****************************************\n\n"
+// "Sales for %s:\n"
+// "Day 1- SUV: %d Sedan: %d Coupe: %d GT: %d\n"
+// "Day 2- SUV: %d Sedan: %d Coupe: %d GT: %d\n"
+// "Day 3- SUV: %d Sedan: %d Coupe: %d GT: %d\n"
+// "Day 4- SUV: %d Sedan: %d Coupe: %d GT: %d\n"
+// ...
+// "Sales for %s:\n"
+// ...
+// "Sales for %s:\n"
+// "Sales for %s:\n"
+// "Day 1- SUV: %d Sedan: %d Coupe: %d GT: %d\n"
+// "Day 2- SUV: %d Sedan: %d Coupe: %d GT: %d\n"
+// ...
+// "Sales for %s:\n"
+// ...
+// "\n\n*****************************************\n")
+// }
 
 // void _5_simpleInsight() {}
 
