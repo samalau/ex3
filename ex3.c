@@ -225,7 +225,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES]) {
 				}
 			}
 			int bestBrand_sales = total_brand ;
-			char bestBrand_name = brands[i] ;
+			char bestBrand_name[BRANDS_NAMES] = brands[i] ;
 
 			// TODO: combine above and below
 
@@ -245,7 +245,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES]) {
 				}
 			}
 			int bestType__sales = total_type ;
-			char bestType_name = types[j] ;
+			char bestType_name[TYPES_NAMES] = types[j] ;
 
 			display = 1 ;
 			printf("In day number %d:\n"
