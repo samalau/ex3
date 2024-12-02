@@ -204,7 +204,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES]) {
 			int typeSize = sizeof(cube[yom][0]) / sizeof(cube[yom][0][0]) ;
 			
 			int flattened[brandSize * typeSize] ;
-			flattenedCubeSlice((const int *)cube, yom, brandSize, typeSize, flattened) ;
+			flattenCubeSlice((const int *)cube, yom, brandSize, typeSize, flattened) ;
 			int flatSliceSize = sizeof(flattened) / sizeof(flattened[0]) ;
 			int salesTotal = getSum(flattened, flatSliceSize) ;
 
@@ -253,7 +253,6 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES]) {
 					"The best sold brand with %d sales was %s\n"
 					"The best sold type with %d sales was %s\n",
 					yom, salesTotal, bestBrand_sales, bestBrand_name, bestType__sales, bestType_name) ;
-			
 		} else {
 			while ((c = getchar()) != '\n' && c != EOF) ;
 			printf("Please enter a valid day\n"
