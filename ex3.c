@@ -72,7 +72,7 @@ void flattenCubeSlice (const int *cube, int specificDay, int brandSize, int type
 void dayCounter(int days[NUM_OF_BRANDS], int *brandIndex) {
 	if (brandIndex == NULL) {
 		for (int i = 0  ; i < NUM_OF_BRANDS  ; i++) {
-			days[i]++ ;  
+			days[i]++ ;
 		}
 	} else {
 		days[*brandIndex]++ ;
@@ -191,7 +191,7 @@ void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day
 int brandsPopulated(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) {
 	int complete = 1 ;
 	for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
-		if (days[i] < DAYS_IN_YEAR - 1 && cube[days[i]][i][0] == -1) {
+		if (days[i] == -1 || (days[i] >= 0 && days[i] < DAYS_IN_YEAR - 1 && cube[days[i]][i][0] == -1)) {
 			if (complete) {
 				printf("No data for brands") ;
 			}
@@ -206,15 +206,24 @@ int brandsPopulated(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day
 
 void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
 	int brandIndex ;
-	while (!brandsPopulated(cube, days)) {
-		if (scanf(" %d", &brandIndex) == 1) {
-			for (int typeIndex = 0 ; typeIndex < NUM_OF_TYPES ; typeIndex++) {
-				scanf(" %d", &sales[typeIndex]) ;
-			}
-			updateCube(cube, days, &brandIndex, sales) ;
+	int valid = 0 ;
+	for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
+		if (days[i] < DAYS_IN_YEAR - 1) {
+			valid = 1 ;
+			break ;
 		}
 	}
-	dayCounter(days, NULL) ;
+	if (valid) {
+		while (!brandsPopulated(cube, days)) {
+			if (scanf(" %d", &brandIndex) == 1) {
+				for (int typeIndex = 0 ; typeIndex < NUM_OF_TYPES ; typeIndex++) {
+					scanf(" %d", &sales[typeIndex]) ;
+				}
+				updateCube(cube, days, &brandIndex, sales) ;
+			}
+		}
+		dayCounter(days, NULL) ;
+	}
 }
 
 
@@ -302,6 +311,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 }
 
 
+
 // void _4_EntireData(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES]) {
 // 	for (int i = 0 ; i < DAYS_IN_YEAR ; i++) {
 // 		for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
@@ -329,6 +339,6 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 // }
 
 
-// void _5_simpleInsight() {}
 
+// void _5_simpleInsight() {}
 // void _6_avgDelta() {}
