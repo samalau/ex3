@@ -30,21 +30,13 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES]) ;
 // void _5_simpleInsight() ;
 // void _6_avgDelta() ;
 
-int getSum(const int *array) {
-	int sum = 0 ;
-	for (int i = 0 ; i < size ; i++) {
-		for (int j = 0 ; j < size ; j++) {
-			sum += array[i];
-		}
-	}
-	return sum ;
-}
+
 
 // void getMax() {
 
 // }
 
-void dayCounter(int days[NUM_OF_BRANDS], int* brandIndex) {
+void dayCounter(int days[NUM_OF_BRANDS], int *brandIndex) {
 	if (brandIndex == NULL) {
 		for (int i = 0  ; i < NUM_OF_BRANDS  ; i++) {
 			days[i]++ ;  
@@ -55,7 +47,9 @@ void dayCounter(int days[NUM_OF_BRANDS], int* brandIndex) {
 }
 
 
-void updateCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int* brandIndex, int sales[NUM_OF_TYPES]) {
+
+
+void updateCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int *brandIndex, int sales[NUM_OF_TYPES]) {
 	if (*brandIndex < 0 || *brandIndex > NUM_OF_BRANDS - 1) {
 		printf("This brand is not valid\n") ;
 	} else {
@@ -178,24 +172,53 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 }
 
 
+int getSum(const int *array, int size) {
+	int sum = 0 ;
+	for (int i = 0 ; i < size ; i++) {
+		if (array[i] != -1) {
+			sum += array[i];
+		}
+	}
+	return sum ;
+}
+
+
+
+void flattenCubeSlice (const int *cube, int slice, int brandSize, int typeSize, int *flattened) {
+	int ind = 0 ;
+	for (int i = 0 ; i < brandSize ; i++) {
+		for (int j = 0 ; j < typeSize ; j++) {
+			flattened[ind++] = cube[(slice * brandSize * typeSize) + (i * typeSize) + j] ;
+		}
+	}
+}
+
+
 void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES]) {
 	int c, yom, next;
 	int display = 0 ;
 	printf("What day would you like to analyze?\n");
 	while (!display) {
 		if (scanf(" %d", &yom) == 1 && yom >= 0 && yom < DAYS_IN_YEAR) {
-			int sum = 0 ;
-			for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
-				for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
-					int next = cube[yom][i][j] ;
-					if (next != -1) {
-						sum += next ;
-					}
-				}
-			}
+			int brandSize = sizeof(cube[yom]) / sizeof(cube[yom][0]) ;
+			int typeSize = sizeof(cube[yom][0]) / sizeof(cube[yom][0][0]) ;
+			int flattened[brandSize * typeSize] ;
+			flattenedCubeSlice((const int *)cube, yom, brandSize, typeSize, flattened) ;
+			int flatSliceSize = sideof(flattened) / size(flattened[0]) ;
+			int salesTotal = getSum(flattened, flatSliceSize) ;
+			int salesTotal ;
+			int bestBrand_salesAmount ;
+			int bestBrand_name ;
+			int bestType__salesAmount ;
+			int bestType_name ;
+			
 			display = 1 ;
-			printf("sum is %d\n", sum) ;
-			getSum(cube[yom])
+			printf("In day number %d:\n"
+					"The sales total was %d\n"
+					"The best sold brand with %d sales was %s\n"
+					"The best sold type with %d sales was %s\n",
+					yom, salesTotal, bestBrand_salesAmount, bestBrand_name, bestType__salesAmount, bestType_name) ;
+			
 		} else {
 			while ((c = getchar()) != '\n' && c != EOF) ;
 			printf("Please enter a valid day\n"
@@ -203,7 +226,6 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES]) {
 			continue ;
 		}
 	}
-
 }
 
 
