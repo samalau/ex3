@@ -302,33 +302,21 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 }
 
 
-
-// void _4_EntireData(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES]) {
-// 	for (int i = 0 ; i < DAYS_IN_YEAR ; i++) {
-// 		for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
-// 			if (cube[i][j][] )
-// 			"Sales for %s:\n", brands[i]
-// 		}
-// 	}
-// "*****************************************\n\n"
-// "Sales for %s:\n"
-// "Day 1- SUV: %d Sedan: %d Coupe: %d GT: %d\n"
-// "Day 2- SUV: %d Sedan: %d Coupe: %d GT: %d\n"
-// "Day 3- SUV: %d Sedan: %d Coupe: %d GT: %d\n"
-// "Day 4- SUV: %d Sedan: %d Coupe: %d GT: %d\n"
-// ...
-// "Sales for %s:\n"
-// ...
-// "Sales for %s:\n"
-// "Sales for %s:\n"
-// "Day 1- SUV: %d Sedan: %d Coupe: %d GT: %d\n"
-// "Day 2- SUV: %d Sedan: %d Coupe: %d GT: %d\n"
-// ...
-// "Sales for %s:\n"
-// ...
-// "\n\n*****************************************\n")
-// }
-
+void _4_EntireData(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES]) {
+	printf("*****************************************\n") ;
+	for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
+		printf("\nSales for %s:", brands[j]) ;
+		for (int i = 0 ; i < DAYS_IN_YEAR ; i++) {
+			printf("\nDay %d-", i) ;
+			for (int k = 0 ; k < NUM_OF_TYPES ; k++) {
+				if (cube[i][j][k] > -1) {
+					printf(" %s: %d", types[k]) ;
+				}
+			}
+		}
+	}
+	printf("\n\n*****************************************\n") ;
+}
 
 
 // void _5_simpleInsight() {}
