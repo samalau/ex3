@@ -97,7 +97,7 @@ void initSales(int sales[NUM_OF_TYPES], int initAsValue) {
 
 void initDays(int days[NUM_OF_BRANDS], int initAsValue) {
 	for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
-		days[i] = -1 ;
+		days[i] = 0 ;
 	}
 }
 
@@ -162,23 +162,21 @@ int main() {
 
 
 void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
-	int valid = 1 ;
 	int brandIndex, c ;
 	printf("Enter the sales data for a single brand on a single day:\n") ;
 	if (scanf(" %d %d %d %d %d", &brandIndex, &sales[0], &sales[1], &sales[2], &sales[3]) == 5) {
-		if ((c = getchar()) == '\n' && brandIndex >= 0 && brandIndex < NUM_OF_BRANDS && days[brandIndex] < DAYS_IN_YEAR - 1) {
+		int valid = 1 ;
+		if (brandIndex >= 0 && brandIndex < NUM_OF_BRANDS) {
 			for (int i = 0 ; i < NUM_OF_TYPES ; i++) {
 				if (sales[i] < 0) {
 					valid = 0 ;
 					break ;
 				}
 			}
-			if (valid) {
+			if (valid && days[brandIndex] < DAYS_IN_YEAR - 1) {
 				updateCube(cube, days, &brandIndex, sales) ;
 			}
 		}
-	} else {
-		while ((c = getchar()) == '\n' && c != EOF) ;
 	}
 }
 
