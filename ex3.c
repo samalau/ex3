@@ -259,8 +259,6 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 
 		int brandSize = 0 ;
 		int typeSize = 0 ;
-		// int brandSize = sizeof(cube[yom]) / sizeof(cube[yom][0]) ;
-		// int typeSize = sizeof(cube[yom][0]) / sizeof(cube[yom][0][0]) ;
 		
 		for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
 			int validData = 0 ;
@@ -300,11 +298,8 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 			}
 		}
 
-		// flattenCubeSlice((const int *)cube, yom, brandSize, typeSize, flattened) ;
-		// int flatSliceSize = sizeof(flattened) / sizeof(flattened[0]) ;
 		int salesTotal = getSum(flattened, ind) ;
 
-		// int i = 0, j = 0 ;
 		int bestBrand = -1 ;
 		int total_brand = 0 ;
 		int bestBrand_sales = -1 ;
@@ -323,7 +318,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 			}
 		}
 
-		// TODO: combine above and below
+		// QUE: combine above and below?
 
 		int bestType = -1 ;
 		int total_type = 0 ;
