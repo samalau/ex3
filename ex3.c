@@ -64,7 +64,7 @@ void updateCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 	if (*brandIndex < 0 || *brandIndex > NUM_OF_BRANDS - 1) {
 		printf("This brand is not valid\n") ;
 	} else {
-		if (days[*brandIndex] < DAYS_IN_YEAR - 1) {
+		if (days[*brandIndex] < DAYS_IN_YEAR - 1 && cube[days[*brandIndex]][*brandIndex][0] == -1) {
 			for (int typeIndex = 0 ; typeIndex < NUM_OF_TYPES ; typeIndex++) {
 				cube[days[*brandIndex]][*brandIndex][typeIndex] = sales[typeIndex] ;
 			}
@@ -124,7 +124,6 @@ int main() {
 		printMenu() ;
 		if (scanf(" %d", &choice) != 1 || ((c = getchar()) != '\n' && c != EOF)) {
 			choice = 0 ;
-			while ((c = getchar()) != '\n' && c != EOF) ;
 		}
 		switch(choice){
 			case done:
@@ -150,7 +149,6 @@ int main() {
 			default:
 				printf("Invalid input\n") ;
 		}
-		while ((c = getchar()) != '\n' && c != EOF) ;
 	}
 	printf("Goodbye!\n") ;
 	return 0 ;
@@ -178,22 +176,21 @@ void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day
 
 
 void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
-	int lowestDay = DAYS_IN_YEAR - 1 ;
+	int nextAvailableDay = DAYS_IN_YEAR - 1 ;
 	for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
-		if (days[j] < lowestDay) {
-			lowestDay = days[j] ;
+		if (days[j] < nextAvailableDay) {
+			nextAvailableDay = days[j] ;
 		}
 	}
-	int nextAvailableDay = lowestDay + 1 ;
 	int filled = 0 ;
 	while (!filled) {
 		filled = 1 ;
 		printf("No data for brands") ;
 		for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
-			if (days[j] == lowestDay) {
-				if (cube[nextAvailableDay][j][0] == -1) {
-					printf(" %s", brands[j]) ;
-				}	
+			if (days[j] == nextAvailableDay) {
+				// if (cube[nextAvailableDay][j][0] == -1) {
+				printf(" %s", brands[j]) ;
+				// }
 			}
 		}
 		printf("\nPlease complete the data\n") ;
@@ -208,31 +205,22 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 							break ;
 						}
 					}
+				} else {
+					valid = 0 ;
 				}
 				if (valid) {
 					updateCube(cube, days, &brandIndex, sales) ;
 				}
 			}
 		}
-		
 		for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
-			if (days[j] == lowestDay) {
+			if (days[j] == nextAvailableDay) {
 				filled = 0 ;
 				break ;
 			}
 		}
 	}
 }
-
-
-// void flattenCubeSlice (const int *cube, int specificDay, int brandSize, int typeSize, int *flattened) {
-// 	int ind = 0 ;
-// 	for (int i = 0 ; i < brandSize ; i++) {
-// 		for (int j = 0 ; j < typeSize ; j++) {
-// 			flattened[ind++] = cube[(specificDay * brandSize * typeSize) + (i * typeSize) + j] ;
-// 		}
-// 	}
-// }
 
 
 void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) {
