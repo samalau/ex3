@@ -330,7 +330,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 					bestBrand = i;
 				}
 			}
-
+			
 			// QUE: combine above and below?
 
 			int bestType = -1 ;
