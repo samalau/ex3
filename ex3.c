@@ -188,7 +188,7 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 	while (1) {
 		printf("No data for brands") ;
 		for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
-			if (days[j] == nextAvailableDay) {
+			if (days[j] == lowestDay) {
 				if (cube[nextAvailableDay][j][0] == -1) {
 					printf(" %s", brands[j]) ;
 				}	
