@@ -37,7 +37,7 @@ void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day
 void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) ;
 void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) ;
 void _4_EntireData(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) ;
-// void _5_simpleInsight() ;
+void _5_simpleInsight() ;
 // void _6_avgDelta() ;
 
 
@@ -134,7 +134,7 @@ int main() {
 				_4_EntireData(cube, days) ;
 				break ;
 			case insights:
-				// _5_simpleInsight() ;
+				_5_simpleInsight() ;
 				break ;
 			case deltas:
 				// _6_avgDelta() ;
@@ -375,5 +375,17 @@ void _4_EntireData(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 }
 
 
-// void _5_simpleInsight() {}
+void _5_simpleInsight() {
+
+
+// "The best-selling brand overall is X: $sales\n"
+
+// "The best-selling type of car is Y: $sales\n"
+
+// "The most profitable day was day number Z: $sales\n"
+
+
+}
+
+
 // void _6_avgDelta() {}
