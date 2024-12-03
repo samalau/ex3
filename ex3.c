@@ -227,7 +227,7 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 				int c ;
 				while ((c = getchar()) != '\n' && c != EOF);
 				continue ;
-			
+			}
 			for (int typeIndex = 0 ; typeIndex < NUM_OF_TYPES ; typeIndex++) {
 				if (scanf(" %d", &sales[typeIndex]) != 1 || sales[typeIndex] < 0) {
 					tryAnother = 1 ;
