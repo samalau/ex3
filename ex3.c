@@ -218,6 +218,8 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 		} else {
 			printf("This brand is not valid\n") ;
 		}
+		int c;
+		while ((c = getchar()) != '\n' && c != EOF) ;
 		for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
 			if (days[j] == nextAvailableDay) {
 				filled = 0 ;
@@ -245,8 +247,8 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 
 		int yom = -1;
 		if (scanf(" %d", &yom) != 1 || yom < 0 || yom >= DAYS_IN_YEAR || yom > --lastPossibleDay) {
-			// int c;
-			// while ((c = getchar()) != '\n' && c != EOF) ;
+			int c;
+			while ((c = getchar()) != '\n' && c != EOF) ;
 			printf("Please enter a valid day\n"
 					"Which day would you like to analyze?\n") ;
 			continue ;
@@ -261,8 +263,8 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 		}
 		
 		if (!valid) {
-			// int c;
-			// while ((c = getchar()) != '\n' && c != EOF) ;
+			int c;
+			while ((c = getchar()) != '\n' && c != EOF) ;
 			printf("Please enter a valid day\n"
 					"Which day would you like to analyze?\n") ;
 			continue ;
