@@ -244,7 +244,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 	while (!display) {
 
 		int yom = -1;
-		if (scanf(" %d", &yom) != 1 || yom < 0 || yom >= DAYS_IN_YEAR || yom < --lastPossibleDay) {
+		if (scanf(" %d", &yom) != 1 || yom < 0 || yom >= DAYS_IN_YEAR || yom > --lastPossibleDay) {
 			// int c;
 			// while ((c = getchar()) != '\n' && c != EOF) ;
 			printf("Please enter a valid day\n"
@@ -254,7 +254,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 
 		int valid = 0 ;
 		for (int k = 0 ; k < NUM_OF_BRANDS ; k++) {
-			if (days[k] > -1 && yom <= days[k]) {
+			if (days[k] > -1 && yom <= days[k] && yom <= lastPossibleDay) {
 				valid = 1 ;
 				break ;
 			}
