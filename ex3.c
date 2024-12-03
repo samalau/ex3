@@ -31,7 +31,7 @@ void updateCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 int brandsPopulated(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) ;
 
 void initDays(int days[NUM_OF_BRANDS], int initAsValue) ;
-void initSales(int sales[NUM_OF_TYPES], int initAsValue) ;
+void initSales(int sales[NUM_OF_TYPES], int initAsValue) ; 
 void initCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int initAsValue) ;
 
 void printMenu() ;
@@ -168,22 +168,32 @@ int main() {
 
 
 void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
+	
 	int brandIndex ;
-	int invalid = 0 ;
+
 	printf("Enter the sales data for a single brand on a single day:\n") ;
-	if (scanf(" %d", &brandIndex) == 1 && brandIndex >= 0 && brandIndex < NUM_OF_BRANDS) {
-		for (int typeIndex = 0 ; typeIndex < NUM_OF_TYPES ; typeIndex++) {
-			if (scanf(" %d", &sales[typeIndex]) != 1 || sales[typeIndex] < 0) {
-				invalid = 1 ;
-				break ;
+
+	if (scanf(" %d %d %d %d %d", &brandIndex, &sales[0], &sales[1], &sales[2], &sales[3]) != 1) {
+		int c ;
+		while ((c = getchar()) == ' ' && c != EOF) ;
+	} else {
+		int c = getchar() ;
+		if (c == ' ') {
+			while ((c = getchar()) == ' ') ;
+		}
+
+		if (c == '\n' && brandIndex >= 0 && brandIndex < NUM_OF_BRANDS && days[brandIndex] < DAYS_IN_YEAR - 1) {
+			for (int i = 0 ; i > NUM_OF_TYPES ; i++) {
+				if (sales[i] >= 0) {
+					if (i == NUM_OF_TYPES - 1) {
+						updateCube(cube, days, &brandIndex, sales) ;
+					}
+				} else {
+					break ;
+				}
 			}
 		}
-		if (!invalid) {
-			updateCube(cube, days, &brandIndex, sales) ;
-		}
 	}
-	int c ;
-	while ((c = getchar()) != '\n' && c != EOF) ;
 }
 
 
