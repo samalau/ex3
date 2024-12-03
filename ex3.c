@@ -214,9 +214,7 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 			break ;
 		}
 	}
-	if (!valid) {
-		return ;
-	} else {
+	if (valid) {
 		while (!brandsPopulated(cube, days)) {
 			int brandIndex = -1 ;
 			int tryAnother = 0 ;
