@@ -178,18 +178,18 @@ void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day
 
 
 void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
-
 	int lowestDay = DAYS_IN_YEAR - 1 ;
 	for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
 		if (days[j] < lowestDay) {
 			lowestDay = days[j] ;
 		}
 	}
-	while (lowestDay < DAYS_IN_YEAR - 1) {	
+	int nextAvailableDay = lowestDay + 1 ;
+	while (1) {
 		printf("No data for brands") ;
 		for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
-			if (days[j] == lowestDay) {
-				if (cube[lowestDay][j][0] == -1) {
+			if (days[j] == nextAvailableDay) {
+				if (cube[nextAvailableDay][j][0] == -1) {
 					printf(" %s", brands[j]) ;
 				}	
 			}
@@ -199,7 +199,7 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 		if (scanf(" %d %d %d %d %d", &brandIndex, &sales[0], &sales[1], &sales[2], &sales[3]) == 5) {
 			if (brandIndex >= 0 && brandIndex < NUM_OF_BRANDS) {
 				int valid = 1 ;
-				if (cube[lowestDay][brandIndex][0] == -1) {
+				if (cube[nextAvailableDay][brandIndex][0] == -1) {
 					for (int i = 0 ; i < NUM_OF_TYPES ; i++) {
 						if (sales[i] < 0) {
 							valid = 0 ;
@@ -212,6 +212,12 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 				}
 			}
 		}
+		for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
+			if (days[j] == lowestDay) {
+				continue ;
+			}
+		}
+		break ;
 	}
 }
 
