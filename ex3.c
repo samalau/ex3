@@ -380,7 +380,9 @@ void _5_simpleInsight() {
 
 // "The best-selling brand overall is X: $sales\n"
 
+
 // "The best-selling type of car is Y: $sales\n"
+
 
 // "The most profitable day was day number Z: $sales\n"
 
