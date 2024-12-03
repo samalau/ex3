@@ -230,15 +230,21 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 
 void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) {
 
-	int display = 0 ;
+
+	int lastPossibleDay = -1 ;
+	for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
+		if (days[j] > lastPossibleDay) {
+			lastPossibleDay = days[j] ;
+		}
+	}
 
 	printf("What day would you like to analyze?\n") ;
 
+	int display = 0 ;
 	while (!display) {
 
 		int yom = -1;
-
-		if (scanf(" %d", &yom) != 1 || yom < 0 || yom >= DAYS_IN_YEAR) {
+		if (scanf(" %d", &yom) != 1 || yom < 0 || yom >= DAYS_IN_YEAR || yom < --lastPossibleDay) {
 			// int c;
 			// while ((c = getchar()) != '\n' && c != EOF) ;
 			printf("Please enter a valid day\n"
