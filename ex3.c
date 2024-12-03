@@ -170,15 +170,10 @@ int main() {
 void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
 	
 	int brandIndex ;
-
 	printf("Enter the sales data for a single brand on a single day:\n") ;
-
+	int c ;
 	if (scanf(" %d %d %d %d %d", &brandIndex, &sales[0], &sales[1], &sales[2], &sales[3]) == 5) {
-		int c = getchar() ;
-		if (c != '\n') {
-			while ((c = getchar()) == ' ') ;
-		}
-		if (c == '\n' && brandIndex >= 0 && brandIndex < NUM_OF_BRANDS && days[brandIndex] < DAYS_IN_YEAR - 1) {
+		if ((c = getchar()) == '\n' && brandIndex >= 0 && brandIndex < NUM_OF_BRANDS && days[brandIndex] < DAYS_IN_YEAR - 1) {
 			for (int i = 0 ; i < NUM_OF_TYPES ; i++) {
 				if (sales[i] >= 0) {
 					if (i == NUM_OF_TYPES - 1) {
@@ -189,6 +184,8 @@ void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day
 				}
 			}
 		}
+	} else {
+		while ((c = getchar()) == '\n' && c != EOF) ;
 	}
 }
 
@@ -259,9 +256,10 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 					"Which day would you like to analyze?\n") ;
 			continue ;
 		}
+
 		int valid = 0 ;
 		for (int k = 0 ; k < NUM_OF_BRANDS ; k++) {
-			if (days[k] > -1 && yom <= days[k] && days[k] < DAYS_IN_YEAR) {
+			if (days[k] > -1 && yom <= days[k]) {
 				valid = 1 ;
 				break ;
 			}
