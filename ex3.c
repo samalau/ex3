@@ -162,20 +162,19 @@ int main() {
 
 
 void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
-	
-	int brandIndex ;
+	int valid = 1 ;
+	int brandIndex, c ;
 	printf("Enter the sales data for a single brand on a single day:\n") ;
-	int c ;
 	if (scanf(" %d %d %d %d %d", &brandIndex, &sales[0], &sales[1], &sales[2], &sales[3]) == 5) {
 		if ((c = getchar()) == '\n' && brandIndex >= 0 && brandIndex < NUM_OF_BRANDS && days[brandIndex] < DAYS_IN_YEAR - 1) {
 			for (int i = 0 ; i < NUM_OF_TYPES ; i++) {
-				if (sales[i] >= 0) {
-					if (i == NUM_OF_TYPES - 1) {
-						updateCube(cube, days, &brandIndex, sales) ;
-					}
-				} else {
+				if (sales[i] < 0) {
+					valid = 0 ;
 					break ;
 				}
+			}
+			if (valid) {
+				updateCube(cube, days, &brandIndex, sales) ;
 			}
 		}
 	} else {
@@ -326,7 +325,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 		int ind = 0 ;
 		for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
 			for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
-				if (cube[yom][i][j] != 1) {
+				if (cube[yom][i][j] != -1) {
 					flattened[ind++] = cube[yom][i][j] ;
 				}
 			}
@@ -337,37 +336,38 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 		int salesTotal = getSum(flattened, ind) ;
 
 		// int i = 0, j = 0 ;
-		int bestBrand = 0 ;
-		int bestBrand_sales = 0 ;
-		int previousTotal_brand = 0 ;
+		int bestBrand = -1 ;
+		int total_brand = 0 ;
+		int bestBrand_sales = -1 ;
 		
 		for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
+			total_brand = 0 ;
 			for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
 				if (cube[yom][i][j] != -1) {
-					bestBrand_sales += cube[yom][i][j] ;
+					total_brand += cube[yom][i][j] ;
 				}
 			}
 			// QUE: what if equally best?
-			if (bestBrand_sales > previousTotal_brand) {
-				previousTotal_brand = bestBrand_sales ;
+			if (total_brand > bestBrand_sales) {
+				bestBrand_sales = total_brand ;
 				bestBrand = i ;
 			}
 		}
 
 		// TODO: combine above and below
 
-		int bestType = 0 ;
-		int bestType__sales = 0 ;
-		int previousTotal_type = 0 ;
+		int bestType = -1 ;
+		int total_type = 0 ;
+		int bestType_sales = -1 ;
 		for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
 			for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
 				if (cube[yom][i][j] != -1) {
-					bestType__sales += cube[yom][i][j] ;
+					total_type += cube[yom][i][j] ;
 				}
 			}
 			// QUE: what if equally best?
-			if (bestType__sales > previousTotal_type) {
-				previousTotal_type = bestType__sales ;
+			if (total_type > bestType_sales) {
+				bestType_sales = total_type ;
 				bestType = j ;
 			}
 		}
@@ -379,7 +379,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 				yom,
 				salesTotal,
 				bestBrand_sales, brands[bestBrand],
-				bestType__sales, types[bestType]) ;
+				bestType_sales, types[bestType]) ;
 	}
 }
 
