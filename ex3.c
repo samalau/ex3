@@ -23,8 +23,9 @@ char brands[NUM_OF_BRANDS][BRANDS_NAMES] = {"Toyoga", "HyunNight", "Mazduh", "Fo
 char types[NUM_OF_TYPES][TYPES_NAMES] = {"SUV", "Sedan", "Coupe", "GT"} ;
 
 // void getMax() ;
+
 int getSum(const int *array, int size) ;
-void flattenCubeSlice (const int *cube, int specificDay, int brandSize, int typeSize, int *flattened) ;
+// void flattenCubeSlice (const int *cube, int specificDay, int brandSize, int typeSize, int *flattened) ;
 
 void updateCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int *brandIndex, int sales[NUM_OF_TYPES]) ;
 
@@ -59,14 +60,7 @@ int getSum(const int *array, int size) {
 }
 
 
-void flattenCubeSlice (const int *cube, int specificDay, int brandSize, int typeSize, int *flattened) {
-	int ind = 0 ;
-	for (int i = 0 ; i < brandSize ; i++) {
-		for (int j = 0 ; j < typeSize ; j++) {
-			flattened[ind++] = cube[(specificDay * brandSize * typeSize) + (i * typeSize) + j] ;
-		}
-	}
-}
+
 
 
 void updateCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int *brandIndex, int sales[NUM_OF_TYPES]) {
@@ -191,20 +185,25 @@ void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day
 
 
 int brandsPopulated(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) {
-	int complete = 1 ;
+	int complete = 0 ;
 	int beganState = 0 ;
-	for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
-		if (days[i] == -1 || (days[i] >= 0 && days[i] < DAYS_IN_YEAR - 1 && cube[days[i]][i][0] == -1)) {
-			if (!beganState) {
-				printf("No data for brands") ;
-				beganState = 1 ;
+	for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
+		int needsData = 0 ;
+		for (int i = 0 ; i < days[j] ; i++) {
+			if (cube[i][j][0] == -1) {
+				needsData = 1 ;
+				if (!beganState) {
+					beganState = 1 ;
+					printf("No data for brands") ;
+				}
+				printf(" %s", brands[j]) ;
 			}
-			printf(" %s", brands[i]) ;
-			complete = 0 ;
 		}
 	}
-	if (!complete) {
+	if (beganState) {
 		printf("\nPlease complete the data\n") ;
+	} else {
+		complete = 1 ;
 	}
 	return complete ;
 }
@@ -218,25 +217,42 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 			break ;
 		}
 	}
-	if (valid) {
+	if (!valid) {
+		return ;
+	} else {
 		while (!brandsPopulated(cube, days)) {
 			int brandIndex = -1 ;
 			int tryAnother = 0 ;
-			if (scanf(" %d", &brandIndex) == 1 && brandIndex >= 0 && brandIndex < NUM_OF_BRANDS) {
-				for (int typeIndex = 0 ; typeIndex < NUM_OF_TYPES ; typeIndex++) {
-					if (scanf(" %d", &sales[typeIndex]) != 1 || sales[typeIndex] < 0) {
-						tryAnother = 1 ;
-						break ;
-					}
+			if (scanf(" %d", &brandIndex) != 1 || brandIndex < 0 || brandIndex >= NUM_OF_BRANDS) {
+				int c ;
+				while ((c = getchar()) != '\n' && c != EOF);
+				continue ;
+			
+			for (int typeIndex = 0 ; typeIndex < NUM_OF_TYPES ; typeIndex++) {
+				if (scanf(" %d", &sales[typeIndex]) != 1 || sales[typeIndex] < 0) {
+					tryAnother = 1 ;
+					break ;
 				}
-				if (tryAnother) {
-					continue ;
-				}
-				updateCube(cube, days, &brandIndex, sales) ;
 			}
+			if (tryAnother) {
+				int c ;
+				while ((c = getchar()) != '\n' && c != EOF);
+				continue ;
+			}
+			updateCube(cube, days, &brandIndex, sales) ;
 		}
 	}
 }
+
+
+// void flattenCubeSlice (const int *cube, int specificDay, int brandSize, int typeSize, int *flattened) {
+// 	int ind = 0 ;
+// 	for (int i = 0 ; i < brandSize ; i++) {
+// 		for (int j = 0 ; j < typeSize ; j++) {
+// 			flattened[ind++] = cube[(specificDay * brandSize * typeSize) + (i * typeSize) + j] ;
+// 		}
+// 	}
+// }
 
 
 void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) {
@@ -250,8 +266,8 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 		int yom = -1;
 
 		if (scanf(" %d", &yom) != 1 || yom < 0 || yom >= DAYS_IN_YEAR) {
-			int c;
-			while ((c = getchar()) != '\n' && c != EOF) ;
+			// int c;
+			// while ((c = getchar()) != '\n' && c != EOF) ;
 			printf("Please enter a valid day\n"
 					"Which day would you like to analyze?\n") ;
 			continue ;
@@ -266,28 +282,67 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 		}
 		
 		if (!valid) {
-			int c;
-			while ((c = getchar()) != '\n' && c != EOF) ;
+			// int c;
+			// while ((c = getchar()) != '\n' && c != EOF) ;
 			printf("Please enter a valid day\n"
 					"Which day would you like to analyze?\n") ;
 			continue ;
 		}
 
-		int brandSize = sizeof(cube[yom]) / sizeof(cube[yom][0]) ;
-		int typeSize = sizeof(cube[yom][0]) / sizeof(cube[yom][0][0]) ;
+		int brandSize = 0 ;
+		int typeSize = 0 ;
+		// int brandSize = sizeof(cube[yom]) / sizeof(cube[yom][0]) ;
+		// int typeSize = sizeof(cube[yom][0]) / sizeof(cube[yom][0][0]) ;
 		
-		int flattened[brandSize * typeSize] ;
-		flattenCubeSlice((const int *)cube, yom, brandSize, typeSize, flattened) ;
-		int flatSliceSize = sizeof(flattened) / sizeof(flattened[0]) ;
-		int salesTotal = getSum(flattened, flatSliceSize) ;
+		for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
+			int validData = 0 ;
+			for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
+				if (cube[yom][i][j] != -1) {
+					validData = 1 ;
+					break ;
+				}
+			}
+			// QUE: what if equally best?
+			if (validData) {
+				brandSize++ ;
+			}
+		}
+		for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
+			int validData = 0 ;
+			for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
+				if (cube[yom][i][j] != -1) {
+					validData = 1 ;
+					break ;
+				}
+			}
+			// QUE: what if equally best?
+			if (validData) {
+				typeSize++ ;
+			}
+		}
 
-		int i = 0, j = 0 ;
+
+		int flattened[brandSize * typeSize] ;
+		int ind = 0 ;
+		for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
+			for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
+				if (cube[yom][i][j] != 1) {
+					flattened[ind++] = cube[yom][i][j] ;
+				}
+			}
+		}
+
+		// flattenCubeSlice((const int *)cube, yom, brandSize, typeSize, flattened) ;
+		// int flatSliceSize = sizeof(flattened) / sizeof(flattened[0]) ;
+		int salesTotal = getSum(flattened, ind) ;
+
+		// int i = 0, j = 0 ;
 		int bestBrand = 0 ;
 		int bestBrand_sales = 0 ;
 		int previousTotal_brand = 0 ;
 		
-		for (i = 0 ; i < NUM_OF_BRANDS ; i++) {
-			for (j = 0 ; j < NUM_OF_TYPES ; j++) {
+		for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
+			for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
 				if (cube[yom][i][j] != -1) {
 					bestBrand_sales += cube[yom][i][j] ;
 				}
@@ -304,8 +359,8 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 		int bestType = 0 ;
 		int bestType__sales = 0 ;
 		int previousTotal_type = 0 ;
-		for (j = 0 ; j < NUM_OF_TYPES ; j++) {
-			for (i = 0 ; i < NUM_OF_BRANDS ; i++) {
+		for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
+			for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
 				if (cube[yom][i][j] != -1) {
 					bestType__sales += cube[yom][i][j] ;
 				}
