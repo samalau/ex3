@@ -374,7 +374,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 					"The sales total was %d\n"
 					"The best sold brand with %d sales was %s\n"
 					"The best sold type with %d sales was %s\n",
-					yom,
+					yom + 1,
 					salesTotal,
 					bestBrand_sales, brands[bestBrand],
 					bestType_sales, types[bestType]) ;
@@ -384,7 +384,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 
 
 void _4_EntireData(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) {
-	printf("*****************************************\n") ;
+	printf("*****************************************") ;
 	for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
 		printf("\nSales for %s:", brands[j]) ;
 		for (int i = 0 ; i < DAYS_IN_YEAR ; i++) {
@@ -398,7 +398,7 @@ void _4_EntireData(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 			}
 		}
 	}
-	printf("\n\n*****************************************\n") ;
+	printf("\n*****************************************\n") ;
 }
 
 
