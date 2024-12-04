@@ -493,13 +493,17 @@ void _6_avgDelta(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[N
 	}
 
 	if (lastPossibleDay > 1) {
-		
+
 		for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
 
 			int sumDifferences = 0 ;
 			int validDifferences = 0 ;
 
 			for (int i = 1 ; i < days[j] ; i++) {
+
+				if (cube[i][j][0] == -1) {
+					continue ;
+				}
 
 				int a = 0 ;
 				for (int k = 0 ; k < NUM_OF_TYPES ; k++) {
@@ -522,9 +526,10 @@ void _6_avgDelta(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[N
 					validDifferences++ ;
 				}
 
-			if (validDifferences > 0) {
-				float averageDelta = (float)sumDifferences / validDifferences ;
-				printf("Brand: %s, Average Delta: %.6f\n", brands[j], averageDelta) ;
+				if (validDifferences > 0) {
+					float averageDelta = (float)sumDifferences / validDifferences ;
+					printf("Brand: %s, Average Delta: %.6f\n", brands[j], averageDelta) ;
+				}
 			}
 		}
 	}
