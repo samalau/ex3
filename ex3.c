@@ -115,6 +115,7 @@ void printMenu(){
 		   "7.exit\n") ;
 }
 
+int choice = 0 ;
 
 int main() {
 	int days[NUM_OF_BRANDS] ;
@@ -123,12 +124,12 @@ int main() {
 	initSales(sales, -1) ;
 	int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES] ;
 	initCube(cube, -1) ;
-	int choice = 0 ;
 	while(choice != done) {
 		printMenu() ;
 		int input = scanf(" %d", &choice) ;
 		if (input == EOF) {
 			choice = done ;
+			break ;
 		} else if (input != 1) {
 			choice = 0 ;
 		}
@@ -167,8 +168,11 @@ int main() {
 void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
 	int brandIndex ;
 	printf("Enter the sales data for a single brand on a single day:\n") ;
-	
-	if (scanf(" %d %d %d %d %d", &brandIndex, &sales[0], &sales[1], &sales[2], &sales[3]) != 5) {
+	int input = scanf(" %d %d %d %d %d", &brandIndex, &sales[0], &sales[1], &sales[2], &sales[3]) ;
+	if (input == EOF) {
+		choice = done ;
+		return ;
+	} else if (input != 5) {
 		scanf("%*[^\n]") ;
 		scanf("%*c") ;
 	} else {
@@ -212,6 +216,7 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 		int brandIndex = -1 ;
 		int data = scanf(" %d %d %d %d %d", &brandIndex, &sales[0], &sales[1], &sales[2], &sales[3]) ;
 		if (data == EOF) {
+			choice = done ;
 			break ;
 		} else if (data == 5) {
 			if (brandIndex >= 0 && brandIndex < NUM_OF_BRANDS) {
@@ -267,7 +272,8 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 			int yom = -1 ;
 			int input = scanf(" %d", &yom) ;
 			if (input != 1 || yom < 0 || yom >= DAYS_IN_YEAR || yom > lastPossibleDay) {
-				if (input == EOF){
+				if (input == EOF) {
+					choice == done ;
 					break ;
 				} else {
 					scanf("%*[^\n]") ;
