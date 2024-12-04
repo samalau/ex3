@@ -501,7 +501,7 @@ void _6_avgDelta(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[N
 
 		int differences[lastPossibleDay - 1] ;
 		for (int i = 0 ; i < lastPossibleDay - 1 ; i++) {
-			differences[i] = 0 ;
+			differences[i] = -1 ;
 		}
 
 		for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
