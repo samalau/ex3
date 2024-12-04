@@ -281,7 +281,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 
 			int valid = 0 ;
 			for (int k = 0 ; k < NUM_OF_BRANDS ; k++) {
-				if (days[k] > -1 && yom <= days[k] && yom <= lastPossibleDay) {
+				if (days[k] > -1 && yom < days[k] && yom <= lastPossibleDay) {
 					valid = 1 ;
 					break ;
 				}
