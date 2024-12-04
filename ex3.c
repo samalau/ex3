@@ -271,7 +271,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 			if (input == EOF) {
 				choice = done ;
 				break ;
-			} else if (input != 1 || yom < 0 || yom >= DAYS_IN_YEAR || yom > lastPossibleDay) {
+			} else if (input != 1 || yom < 1 || yom > DAYS_IN_YEAR || yom > lastPossibleDay + 1) {
 				scanf("%*[^\n]") ;
 				scanf("%*c") ;
 				printf("Please enter a valid day\n"
@@ -281,7 +281,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 
 			int valid = 0 ;
 			for (int k = 0 ; k < NUM_OF_BRANDS ; k++) {
-				if (days[k] > -1 && yom < days[k] && yom <= lastPossibleDay) {
+				if (days[k] > -1 && yom < days[k] && yom <= lastPossibleDay + 1) {
 					valid = 1 ;
 					break ;
 				}
@@ -306,7 +306,6 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 						break ;
 					}
 				}
-				// QUE: what if equally best?
 				if (validData) {
 					brandSize++ ;
 				}
@@ -319,7 +318,6 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 						break ;
 					}
 				}
-				// QUE: what if equally best?
 				if (validData) {
 					typeSize++ ;
 				}
@@ -343,14 +341,11 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 
 			for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
 				total_brand = getSum(cube[yom][i], NUM_OF_TYPES) ;
-				// QUE: what if equally best?
 				if (total_brand > bestBrand_sales) {
 					bestBrand_sales = total_brand ;
 					bestBrand = i ;
 				}
 			}
-			
-			// QUE: combine above and below?
 
 			int bestType = -1 ;
 			int bestType_sales = -1 ;
@@ -361,7 +356,6 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 					tempCube[i] = cube[yom][i][j] ;
 				}
 				total_type = getSum(tempCube, NUM_OF_BRANDS) ;
-				// QUE: what if equally best?
 				if (total_type > bestType_sales) {
 					bestType_sales = total_type ;
 					bestType = j ;
@@ -437,7 +431,6 @@ void _5_simpleInsight(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int d
 						break ;
 					}
 				}
-				// QUE: what if equally best?
 				if (validData) {
 					brandSize++ ;
 				}
@@ -450,7 +443,6 @@ void _5_simpleInsight(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int d
 						break ;
 					}
 				}
-				// QUE: what if equally best?
 				if (validData) {
 					typeSize++ ;
 				}
@@ -476,14 +468,11 @@ void _5_simpleInsight(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int d
 
 			for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
 				total_brand = getSum(cube[yom][i], NUM_OF_TYPES) ;
-				// QUE: what if equally best?
 				if (total_brand > bestBrand_sales) {
 					bestBrand_sales = total_brand ;
 					bestBrand = i ;
 				}
 			}
- 
-			// QUE: combine above and below?
 
 			total_type = 0 ;
 			for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
@@ -492,7 +481,6 @@ void _5_simpleInsight(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int d
 					tempCube[i] = cube[yom][i][j] ;
 				}
 				total_type = getSum(tempCube, NUM_OF_BRANDS) ;
-				// QUE: what if equally best?
 				if (total_type > bestType_sales) {
 					bestType_sales = total_type ;
 					bestType = j ;
