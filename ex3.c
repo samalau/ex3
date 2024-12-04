@@ -163,7 +163,7 @@ int main() {
 
 
 void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
-	int brandIndex, c ;
+	int brandIndex ;
 	printf("Enter the sales data for a single brand on a single day:\n") ;
 	if (scanf(" %d %d %d %d %d", &brandIndex, &sales[0], &sales[1], &sales[2], &sales[3]) == 5) {
 		int valid = 1 ;
@@ -399,8 +399,6 @@ void _5_simpleInsight(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int d
 
 	if (--lastPossibleDay >= 0) {
 
-		int previous_bestBrand = -1 ;
-		int previous_bestType = -1 ;
 		int bestBrand = -1 ;
 		int bestBrand_sales = -1 ;
 		int bestType = -1 ;
