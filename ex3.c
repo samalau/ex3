@@ -399,98 +399,69 @@ void _4_EntireData(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 void _5_simpleInsight(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) {
 
 	int lastPossibleDay = 0 ;
-
 	for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
 		if (days[j] > lastPossibleDay) {
 			lastPossibleDay = days[j] ;
 		}
 	}
 
-	if (lastPossibleDay >= 1) {
+	--lastPossibleDay ;
 
-		--lastPossibleDay ;
+	if (lastPossibleDay >= 0) {
 
 		int bestBrand = -1 ;
 		int bestBrand_sales = -1 ;
 		int bestType = -1 ;
 		int bestType_sales = -1 ;
-		int bestDay = 0 ;
+		int bestDay = -1 ;
 		int bestDay_sales = -1 ;
+
+		int collectionBrandSales[NUM_OF_BRANDS] = {0} ;
+		int collectionTypeSales[NUM_OF_TYPES] = {0} ;
 
 		for (int yom = 0 ; yom <= lastPossibleDay ; yom++) {
 			
-			int brandSize = 0 ;
-			int typeSize = 0 ;
+			int salesTotal = 0 ;
 			
-			for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
-				int validData = 0 ;
-				for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
-					if (cube[yom][i][j] != -1) {
-						validData = 1 ;
-						break ;
-					}
-				}
-				if (validData) {
-					brandSize++ ;
-				}
-			}
-			for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
-				int validData = 0 ;
-				for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
-					if (cube[yom][i][j] != -1) {
-						validData = 1 ;
-						break ;
-					}
-				}
-				if (validData) {
-					typeSize++ ;
-				}
-			}
+			for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
 
-			int flattened[brandSize * typeSize] ;
-			int ind = 0 ;
-			for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
-				for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
-					if (cube[yom][i][j] != -1) {
-						flattened[ind++] = cube[yom][i][j] ;
+				for (int k = 0 ; k < NUM_OF_TYPES ; k++) {
+					if (cube[yom][j][k] != -1) {
+						salesTotal += cube[yom][j][k] ;
+						collectionBrandSales[j] += cube[yom][j][k] ;
+						collectionTypeSales[k] += cube[yom][j][k] ;
 					}
 				}
 			}
 
-			int salesTotal = getSum(flattened, ind) ;
 			if (salesTotal > bestDay_sales) {
 				bestDay_sales = salesTotal ;
 				bestDay = yom ;
 			}
-			
-			int total_brand = 0 ;
-			for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
-				total_brand = getSum(cube[yom][i], NUM_OF_TYPES) ;
-				if (total_brand > bestBrand_sales) {
-					bestBrand_sales = total_brand ;
-					bestBrand = i ;
-				}
-			}
+		}
 
-			int total_type = 0 ;
-			for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
-				int tempCube[NUM_OF_BRANDS] ;
-				for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
-					tempCube[i] = cube[yom][i][j] ;
-				}
-				total_type = getSum(tempCube, NUM_OF_BRANDS) ;
-				if (total_type > bestType_sales) {
-					bestType_sales = total_type ;
-					bestType = j ;
-				}
+		for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
+			if (collectionBrandSales[j] > bestBrand_sales) {
+				bestBrand_sales = collectionBrandSales[j] ;
+				bestBrand = j ;
 			}
 		}
-		printf("The best-selling brand overall is %s: %d$\n"
-				"The best-selling type of car is %s: %d$\n"
-				"The most profitable day was day number %d: %d$\n",
-				brands[bestBrand], bestBrand_sales,
-				types[bestType], bestType_sales,
-				bestDay + 1, bestDay_sales) ;
+
+		for (int k = 0 ; k < NUM_OF_TYPES ; k++) {
+			if (collectionTypeSales[k] > bestType_sales) {
+				bestType_sales = collectionTypeSales[k] ;
+				bestType = k ;
+			}
+		}
+
+		if (bestBrand != -1 && bestType != -1 && bestDay!= -1) {
+			printf("The best-selling brand overall is %s: %d$\n"
+					"The best-selling type of car is %s: %d$\n"
+					"The most profitable day was day number %d: %d$\n",
+					brands[bestBrand], bestBrand_sales,
+					types[bestType], bestType_sales,
+					bestDay + 1, bestDay_sales) ;
+		}
 	}
 }
 
