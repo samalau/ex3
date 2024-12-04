@@ -127,11 +127,10 @@ int main() {
 	while(choice != done) {
 		printMenu() ;
 		int input = scanf(" %d", &choice) ;
-		if (input != 1) {
-			clearIt = scanf("%*[^\n]");
-			if (clearIt == EOF) {
-				
-			}
+		if (input = EOF) {
+			choice = done ;
+		} else if (input != 1) {
+			scanf("%*[^\n]");
 			scanf("%*c");
 			choice = 0 ;
 		}
@@ -231,7 +230,7 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 			printf("This brand is not valid\n") ;
 		}
 		scanf("%*[^\n]");
-		scanf("%*c");
+		scanf("%*c") ;
 		for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
 			if (days[j] == nextAvailableDay) {
 				filled = 0 ;
