@@ -22,7 +22,7 @@ Assignment: ex3
 char brands[NUM_OF_BRANDS][BRANDS_NAMES] = {"Toyoga", "HyunNight", "Mazduh", "FolksVegan", "Key-Yuh"} ;
 char types[NUM_OF_TYPES][TYPES_NAMES] = {"SUV", "Sedan", "Coupe", "GT"} ;
 
-int getMax(const int *array, int size) ;
+// int getMax(const int *array, int size) ;
 int getSum(const int *array, int size) ;
 
 void initDays(int days[NUM_OF_BRANDS], int initAsValue) ;
@@ -38,20 +38,20 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) ;
 void _4_EntireData(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) ;
 void _5_simpleInsight(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) ;
-// void _6_avgDelta() ;
+void _6_avgDelta() ;
 
 
-int getMax(const int *array, int size) {
-	int max = 0 ;
-	for (int i = 0 ; i < size ; i++) {
-		if (array[i] != -1) {
-			if (array[i] > max) {
-				max = array[i] ;
-			}
-		}
-	}
-	return max ;
-}
+// int getMax(const int *array, int size) {
+// 	int max = 0 ;
+// 	for (int i = 0 ; i < size ; i++) {
+// 		if (array[i] != -1) {
+// 			if (array[i] > max) {
+// 				max = array[i] ;
+// 			}
+// 		}
+// 	}
+// 	return max ;
+// }
 
 
 int getSum(const int *array, int size) {
@@ -151,7 +151,7 @@ int main() {
 				_5_simpleInsight(cube, days) ;
 				break ;
 			case deltas:
-				// _6_avgDelta() ;
+				_6_avgDelta() ;
 				break ;
 			default:
 				printf("Invalid input\n") ;
@@ -177,6 +177,8 @@ void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day
 			if (valid && days[brandIndex] < DAYS_IN_YEAR - 1) {
 				updateCube(cube, days, &brandIndex, sales) ;
 			}
+		} else {
+			printf("This brand is not valid\n") ;
 		}
 	}
 }
@@ -388,7 +390,7 @@ void _4_EntireData(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 void _5_simpleInsight(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) {
 
 	int lastPossibleDay = 0 ;
-	
+
 	for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
 		if (days[j] > lastPossibleDay) {
 			lastPossibleDay = days[j] ;
@@ -494,4 +496,8 @@ void _5_simpleInsight(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int d
 }
 
 
-// void _6_avgDelta() {}
+void _6_avgDelta() {
+
+
+
+}
