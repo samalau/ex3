@@ -506,7 +506,7 @@ void _6_avgDelta(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[N
 		}
 	}
 
-	if (--lastPossibleDay >= 0) {
+	if (--lastPossibleDay > 0) {
 
 		int allSalesTotals[lastPossibleDay + 1] ;
 		for (int i = 0 ; i <= lastPossibleDay ; i++) {
@@ -557,8 +557,8 @@ void _6_avgDelta(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[N
 				}
 
 			}
-			int averageDelta = getSum(differences, lastPossibleDay) / (lastPossibleDay - 1) ;
-			printf("Brand: %s, Average Delta: %.6d\n", brands[i], averageDelta) ;
+			float averageDelta = (float)getSum(differences, lastPossibleDay + 1) / (lastPossibleDay) ;
+			printf("Brand: %s, Average Delta: %.6f\n", brands[i], averageDelta) ;
 		}
 	}
 }
