@@ -492,11 +492,11 @@ void _6_avgDelta(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[N
 		}
 	}
 
-	if (lastPossibleDay > 0) {
+	if (lastPossibleDay > 1) {
 
 		int allSalesTotals[lastPossibleDay] ;
-		for (int i = 0 ; i <= lastPossibleDay - 1 ; i++) {
-			allSalesTotals[i] = 0 ;
+		for (int i = 0 ; i < lastPossibleDay ; i++) {
+			allSalesTotals[i] = -1 ;
 		}
 
 		int differences[lastPossibleDay - 1] ;
@@ -504,47 +504,36 @@ void _6_avgDelta(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[N
 			differences[i] = 0 ;
 		}
 
-		int brandSize = 0 ;
-		int typeSize = 0 ;
-
 		for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
+			for (int i = 0 ; i < lastPossibleDay ; i++) {
+				int totalSales = 0 ;
+				int hasData = 1 ;
+				for (int k = 0 ; k < NUM_OF_TYPES ; k++) {
+					if (cube[i][j][k] != -1) {
+						totalSales += cube[i][j][k] ;
+						hasData = 1 ;
+					}
+				}
+				if (hasData) {
+					allSalesTotals[i] = totalSales ;
+				}
+				if (i > 0 && allSalesTotals[i - 1] != -1) {
+					differences[i - 1] = allSalesTotals[i] - allSalesTotals[i - 1] ;
+				}
+			}
 
-			int previousDay = 0 ;
+			int sumDifferences = 0 ;
+			int validDifferences = 0 ;
 
 			for (int i = 0 ; i < lastPossibleDay ; i++) {
-
-				brandSize = 0 ;
-				typeSize = 0 ;
-				
-				int validData = 0 ;
-				for (int k = 0 ; k < NUM_OF_TYPES ; k++) {
-					if (cube[i][j][k] != -1) {
-						validData = 1 ;
-						break ;
-					}
+				if (differences[i] != 0) {
+					sumDifferences += differences[i] ;
+					validDifferences++ ;
 				}
-				if (validData) {
-					brandSize++ ;
-					typeSize++ ;
-				}
-
-				int flattened[typeSize] ;
-				int ind = 0 ;
-			
-				for (int k = 0 ; k < NUM_OF_TYPES ; k++) {
-					if (cube[i][j][k] != -1) {
-						flattened[ind++] = cube[i][j][k] ;
-					}
-				}
-				allSalesTotals[i] = getSum(flattened, ind) ;
-				if (i > 0){
-					previousDay = i - 1 ;
-					differences[previousDay] = allSalesTotals[i] - allSalesTotals[previousDay] ;
-				}
-
 			}
-			if (lastPossibleDay > 1) {
-				float averageDelta = (float)getSum(differences, lastPossibleDay - 1) / (lastPossibleDay - 1) ;
+
+			if (validDifferences > 0) {
+				float averageDelta = (float)sumDifferences / validDifferences ;
 				printf("Brand: %s, Average Delta: %.6f\n", brands[j], averageDelta) ;
 			}
 		}
