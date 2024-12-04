@@ -127,7 +127,7 @@ int main() {
 	while(choice != done) {
 		printMenu() ;
 		int input = scanf(" %d", &choice) ;
-		if (input = EOF) {
+		if (input == EOF) {
 			choice = done ;
 		} else if (input != 1) {
 			scanf("%*[^\n]") ;
@@ -269,11 +269,11 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 			int yom = -1 ;
 			int input = scanf(" %d", &yom) ;
 			if (input != 1 || yom < 0 || yom >= DAYS_IN_YEAR || yom > lastPossibleDay) {
-				scanf("%*[^\n]") ;
-				scanf("%*c") ;
 				if (input == EOF){
 					break ;
 				} else {
+					scanf("%*[^\n]") ;
+					scanf("%*c") ;
 					printf("Please enter a valid day\n"
 							"Which day would you like to analyze?\n") ;
 					continue ;
