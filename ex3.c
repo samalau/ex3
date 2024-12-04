@@ -92,14 +92,14 @@ void initCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int initAsVal
 
 void initSales(int sales[NUM_OF_TYPES], int initAsValue) {
 	for (int i = 0 ; i < NUM_OF_TYPES ; i++) {
-		sales[i] = -1 ;
+		sales[i] = initAsValue ;
 	}
 }
 
 
 void initDays(int days[NUM_OF_BRANDS], int initAsValue) {
 	for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
-		days[i] = 0 ;
+		days[i] = initAsValue ;
 	}
 }
 
@@ -118,7 +118,7 @@ void printMenu(){
 
 int main() {
 	int days[NUM_OF_BRANDS] ;
-	initDays(days, -1) ;
+	initDays(days, 0) ;
 	int sales[NUM_OF_TYPES] ;
 	initSales(sales, -1) ;
 	int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES] ;
