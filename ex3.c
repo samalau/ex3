@@ -552,7 +552,7 @@ void _6_avgDelta(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[N
 				}
 				allSalesTotals[yom] = getSum(flattened, ind) ;
 				if (yom > 0){
-					previousDay = --yom ;
+					previousDay = yom - 1 ;
 					differences[previousDay] = allSalesTotals[yom] - allSalesTotals[previousDay] ;
 				}
 
