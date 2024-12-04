@@ -271,7 +271,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 			if (input == EOF) {
 				choice = done ;
 				break ;
-			} else if (input != 1 || yom < 1 || yom > DAYS_IN_YEAR || yom > lastPossibleDay + 1) {
+			} else if (input != 1 || yom < 1 || yom > DAYS_IN_YEAR || yom > lastPossibleDay) {
 				scanf("%*[^\n]") ;
 				scanf("%*c") ;
 				printf("Please enter a valid day\n"
@@ -281,7 +281,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 
 			int valid = 0 ;
 			for (int k = 0 ; k < NUM_OF_BRANDS ; k++) {
-				if (days[k] > -1 && yom - 1 < days[k] && yom <= lastPossibleDay + 1) {
+				if (days[k] > 0 && yom - 1 < days[k]) {
 					valid = 1 ;
 					break ;
 				}
@@ -323,6 +323,14 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 				}
 			}
 
+			if (brandSize == 0 || typeSize == 0) {
+				scanf("%*[^\n]") ;
+				scanf("%*c") ;
+				printf("Please enter a valid day\n"
+						"Which day would you like to analyze?\n") ;
+				continue ;
+			}
+
 			int flattened[brandSize * typeSize] ;
 			int ind = 0 ;
 			for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
@@ -331,6 +339,14 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 						flattened[ind++] = cube[yom - 1][i][j] ;
 					}
 				}
+			}
+
+			if (ind == 0) {
+				scanf("%*[^\n]") ;
+				scanf("%*c") ;
+				printf("Please enter a valid day\n"
+						"Which day would you like to analyze?\n") ;
+				continue ;
 			}
 
 			int salesTotal = getSum(flattened, ind) ;
@@ -527,8 +543,10 @@ void _6_avgDelta(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[N
 				}
 
 			}
-			float averageDelta = (float)getSum(differences, lastPossibleDay - 1) / (lastPossibleDay) ;
-			printf("Brand: %s, Average Delta: %.6f\n", brands[j], averageDelta) ;
+			if (lastPossibleDay > 1) {
+				float averageDelta = (float)getSum(differences, lastPossibleDay - 1) / (lastPossibleDay - 1) ;
+				printf("Brand: %s, Average Delta: %.6f\n", brands[j], averageDelta) ;
+			}
 		}
 	}
 }
