@@ -281,7 +281,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 
 			int valid = 0 ;
 			for (int k = 0 ; k < NUM_OF_BRANDS ; k++) {
-				if (days[k] > -1 && yom < days[k] && yom <= lastPossibleDay + 1) {
+				if (days[k] > -1 && yom - 1 < days[k] && yom <= lastPossibleDay + 1) {
 					valid = 1 ;
 					break ;
 				}
@@ -301,7 +301,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 			for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
 				int validData = 0 ;
 				for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
-					if (cube[yom][i][j] != -1) {
+					if (cube[yom - 1][i][j] != -1) {
 						validData = 1 ;
 						break ;
 					}
@@ -313,7 +313,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 			for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
 				int validData = 0 ;
 				for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
-					if (cube[yom][i][j] != -1) {
+					if (cube[yom - 1][i][j] != -1) {
 						validData = 1 ;
 						break ;
 					}
@@ -327,8 +327,8 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 			int ind = 0 ;
 			for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
 				for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
-					if (cube[yom][i][j] != -1) {
-						flattened[ind++] = cube[yom][i][j] ;
+					if (cube[yom - 1][i][j] != -1) {
+						flattened[ind++] = cube[yom - 1][i][j] ;
 					}
 				}
 			}
@@ -340,7 +340,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 			int total_brand = 0 ;
 
 			for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
-				total_brand = getSum(cube[yom][i], NUM_OF_TYPES) ;
+				total_brand = getSum(cube[yom - 1][i], NUM_OF_TYPES) ;
 				if (total_brand > bestBrand_sales) {
 					bestBrand_sales = total_brand ;
 					bestBrand = i ;
@@ -353,7 +353,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 			for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
 				int tempCube[NUM_OF_BRANDS] ;
 				for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
-					tempCube[i] = cube[yom][i][j] ;
+					tempCube[i] = cube[yom - 1][i][j] ;
 				}
 				total_type = getSum(tempCube, NUM_OF_BRANDS) ;
 				if (total_type > bestType_sales) {
@@ -368,7 +368,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 					"The sales total was %d\n"
 					"The best sold brand with %d sales was %s\n"
 					"The best sold type with %d sales was %s\n",
-					yom + 1,
+					yom,
 					salesTotal,
 					bestBrand_sales, brands[bestBrand],
 					bestType_sales, types[bestType]) ;
@@ -383,7 +383,7 @@ void _4_EntireData(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 		printf("\nSales for %s:", brands[j]) ;
 		for (int i = 0 ; i < DAYS_IN_YEAR ; i++) {
 			if (i < days[j]) {
-				printf("\nDay %d-", i) ;
+				printf("\nDay %d-", i + 1) ;
 			}
 			for (int k = 0 ; k < NUM_OF_TYPES ; k++) {
 				if (cube[i][j][k] > -1) {
@@ -492,7 +492,7 @@ void _5_simpleInsight(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int d
 				"The most profitable day was day number %d: %d$\n",
 				brands[bestBrand], bestBrand_sales,
 				types[bestType], bestType_sales,
-				bestDay, bestDay_sales) ;
+				bestDay + 1, bestDay_sales) ;
 	}
 }
 
