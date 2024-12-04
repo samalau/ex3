@@ -507,7 +507,7 @@ void _6_avgDelta(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[N
 		}
 	}
 
-	if (--lastPossibleDay > 0) {
+	if (--lastPossibleDay >= 0) {
 
 		int allSalesTotals[lastPossibleDay + 1] ;
 		for (int i = 0 ; i <= lastPossibleDay ; i++) {
@@ -522,18 +522,18 @@ void _6_avgDelta(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[N
 		int brandSize = 0 ;
 		int typeSize = 0 ;
 
-		for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
+		for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
 
 			int previousDay = 0 ;
 
-			for (int yom = 0 ; yom <= lastPossibleDay ; yom++) {
+			for (int i = 0 ; i <= lastPossibleDay ; i++) {
 
 				brandSize = 0 ;
 				typeSize = 0 ;
 				
 				int validData = 0 ;
-				for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
-					if (cube[yom][i][j] != -1) {
+				for (int k = 0 ; k < NUM_OF_TYPES ; k++) {
+					if (cube[i][j][k] != -1) {
 						validData = 1 ;
 						break ;
 					}
@@ -546,20 +546,20 @@ void _6_avgDelta(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[N
 				int flattened[typeSize] ;
 				int ind = 0 ;
 			
-				for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
-					if (cube[yom][i][j] != -1) {
-						flattened[ind++] = cube[yom][i][j] ;
+				for (int k = 0 ; k < NUM_OF_TYPES ; k++) {
+					if (cube[i][j][k] != -1) {
+						flattened[ind++] = cube[i][j][k] ;
 					}
 				}
-				allSalesTotals[yom] = getSum(flattened, ind) ;
-				if (yom > 0){
-					previousDay = yom - 1 ;
-					differences[previousDay] = allSalesTotals[yom] - allSalesTotals[previousDay] ;
+				allSalesTotals[i] = getSum(flattened, ind) ;
+				if (i > 0){
+					previousDay = i - 1 ;
+					differences[previousDay] = allSalesTotals[i] - allSalesTotals[previousDay] ;
 				}
 
 			}
 			float averageDelta = (float)getSum(differences, lastPossibleDay + 1) / (lastPossibleDay) ;
-			printf("Brand: %s, Average Delta: %.6f\n", brands[i], averageDelta) ;
+			printf("Brand: %s, Average Delta: %.6f\n", brands[j], averageDelta) ;
 		}
 	}
 }
