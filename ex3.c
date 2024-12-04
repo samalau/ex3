@@ -521,11 +521,17 @@ void _6_avgDelta(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[N
 				}
 			}
 
+			for (int i = 0 ; i < lastPossibleDay ; i++) {
+				if (allSalesTotals[i] != -1 && allSalesTotals[i + 1] != -1) {
+					differences[i] = allSalesTotals[i + 1] - allSalesTotals[i] ;
+				}
+			}
+
 			int sumDifferences = 0 ;
 			int validDifferences = 0 ;
 
 			for (int i = 0 ; i < lastPossibleDay ; i++) {
-				if (differences[i] != 0) {
+				if (allSalesTotals[i] != -1 && allSalesTotals[i + 1] != -1) {
 					sumDifferences += differences[i] ;
 					validDifferences++ ;
 				}
