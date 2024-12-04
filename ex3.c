@@ -412,7 +412,7 @@ void _5_simpleInsight(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int d
 		int bestBrand_sales = -1 ;
 		int bestType = -1 ;
 		int bestType_sales = -1 ;
-		int bestDay = -1 ;
+		int bestDay = 0 ;
 		int bestDay_sales = -1 ;
 		int brandSize = 0 ;
 		int typeSize = 0 ;
