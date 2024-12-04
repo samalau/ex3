@@ -493,49 +493,34 @@ void _6_avgDelta(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[N
 	}
 
 	if (lastPossibleDay > 1) {
-
-		int allSalesTotals[lastPossibleDay] ;
-		for (int i = 0 ; i < lastPossibleDay ; i++) {
-			allSalesTotals[i] = -1 ;
-		}
-
-		int differences[lastPossibleDay - 1] ;
-		for (int i = 0 ; i < lastPossibleDay - 1 ; i++) {
-			differences[i] = -1 ;
-		}
-
+		
 		for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
-			for (int i = 0 ; i < lastPossibleDay ; i++) {
-				int totalSales = 0 ;
-				for (int k = 0 ; k < NUM_OF_TYPES ; k++) {
-					if (cube[i][j][k] != -1) {
-						totalSales += cube[i][j][k] ;
-					}
-				}
-				if (totalSales > 0) {
-					allSalesTotals[i] = totalSales ;
-				}
-				
-				if (i > 0 && allSalesTotals[i - 1] != -1 && allSalesTotals[i] != -1) {
-					differences[i - 1] = allSalesTotals[i] - allSalesTotals[i - 1] ;
-				}
-			}
-
-			for (int i = 0 ; i < lastPossibleDay ; i++) {
-				if (allSalesTotals[i - 1] != -1 && allSalesTotals[i] != -1) {
-					differences[i] = allSalesTotals[i] - allSalesTotals[i - 1] ;
-				}
-			}
 
 			int sumDifferences = 0 ;
 			int validDifferences = 0 ;
 
-			for (int i = 0 ; i < lastPossibleDay ; i++) {
-				if (allSalesTotals[i - 1] != -1 && allSalesTotals[i] != -1) {
-					sumDifferences += differences[i] ;
+			for (int i = 1 ; i < days[j] ; i++) {
+
+				int a = 0 ;
+				for (int k = 0 ; k < NUM_OF_TYPES ; k++) {
+					if (cube[i - 1][j][k] >= 0) {
+						a += cube[i - 1][j][k] ;
+					}
+				}
+
+				int b = 0 ;
+				for (int k = 0 ; k < NUM_OF_TYPES ; k++) {
+					if (cube[i][j][k] >= 0) {
+						b += cube[i][j][k] ;
+					}
+				}
+
+				int difference = b - a ;
+
+				if (difference != 0) {
+					sumDifferences += difference ;
 					validDifferences++ ;
 				}
-			}
 
 			if (validDifferences > 0) {
 				float averageDelta = (float)sumDifferences / validDifferences ;
