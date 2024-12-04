@@ -388,6 +388,7 @@ void _4_EntireData(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 void _5_simpleInsight(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) {
 
 	int lastPossibleDay = 0 ;
+	
 	for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
 		if (days[j] > lastPossibleDay) {
 			lastPossibleDay = days[j] ;
@@ -405,11 +406,13 @@ void _5_simpleInsight(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int d
 		int total_type = 0 ;
 		int bestDay = -1 ;
 		int bestDay_sales = -1 ;
+		int brandSize = 0 ;
+		int typeSize = 0 ;
 
 		for (int yom = 0 ; yom <= lastPossibleDay ; yom++) {
 			
-			int brandSize = 0 ;
-			int typeSize = 0 ;
+			brandSize = 0 ;
+			typeSize = 0 ;
 			
 			for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
 				int validData = 0 ;
