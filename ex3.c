@@ -274,7 +274,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 			} else if (input != 1 || yom < 1 || yom > DAYS_IN_YEAR || yom > lastPossibleDay) {
 				scanf("%*[^\n]") ;
 				scanf("%*c") ;
-				printf("Please enter a valid day\n"
+				printf("Please enter a valid day.\n"
 						"Which day would you like to analyze?\n") ;
 				continue ;
 			}
@@ -290,7 +290,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 			if (!valid) {
 				scanf("%*[^\n]") ;
 				scanf("%*c") ;
-				printf("Please enter a valid day\n"
+				printf("Please enter a valid day.\n"
 						"Which day would you like to analyze?\n") ;
 				continue ;
 			}
@@ -326,7 +326,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 			if (brandSize == 0 || typeSize == 0) {
 				scanf("%*[^\n]") ;
 				scanf("%*c") ;
-				printf("Please enter a valid day\n"
+				printf("Please enter a valid day.\n"
 						"Which day would you like to analyze?\n") ;
 				continue ;
 			}
@@ -344,7 +344,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 			if (ind == 0) {
 				scanf("%*[^\n]") ;
 				scanf("%*c") ;
-				printf("Please enter a valid day\n"
+				printf("Please enter a valid day.\n"
 						"Which day would you like to analyze?\n") ;
 				continue ;
 			}
@@ -507,17 +507,16 @@ void _6_avgDelta(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[N
 		for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
 			for (int i = 0 ; i < lastPossibleDay ; i++) {
 				int totalSales = 0 ;
-				int hasData = 1 ;
 				for (int k = 0 ; k < NUM_OF_TYPES ; k++) {
 					if (cube[i][j][k] != -1) {
 						totalSales += cube[i][j][k] ;
-						hasData = 1 ;
 					}
 				}
-				if (hasData) {
+				if (totalSales > 0) {
 					allSalesTotals[i] = totalSales ;
 				}
-				if (i > 0 && allSalesTotals[i - 1] != -1) {
+				
+				if (i > 0 && allSalesTotals[i - 1] != -1 && allSalesTotals[i] != -1) {
 					differences[i - 1] = allSalesTotals[i] - allSalesTotals[i - 1] ;
 				}
 			}
