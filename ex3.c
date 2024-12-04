@@ -130,8 +130,6 @@ int main() {
 		if (input == EOF) {
 			choice = done ;
 		} else if (input != 1) {
-			scanf("%*[^\n]") ;
-			scanf("%*c") ;
 			choice = 0 ;
 		}
 		switch(choice){
@@ -156,6 +154,8 @@ int main() {
 				_6_avgDelta(cube, days) ;
 				break ;
 			default:
+				scanf("%*[^\n]") ;
+				scanf("%*c") ;
 				printf("Invalid input\n") ;
 		}
 	}
