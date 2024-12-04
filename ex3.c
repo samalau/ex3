@@ -128,6 +128,8 @@ int main() {
 	while(choice != done) {
 		printMenu() ;
 		if (scanf(" %d", &choice) != 1 || ((c = getchar()) != '\n' && c != EOF)) {
+			int c ;
+			while ((c = getchar()) != '\n' && c != EOF) ;
 			choice = 0 ;
 		}
 		switch(choice){
@@ -349,6 +351,8 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 				}
 			}
 			display = 1 ;
+			int c ;
+			while ((c = getchar()) != '\n' && c != EOF) ;
 			printf("In day number %d:\n"
 					"The sales total was %d\n"
 					"The best sold brand with %d sales was %s\n"
@@ -477,9 +481,9 @@ void _5_simpleInsight(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int d
 				}
 			}
 		}
-		printf("The best-selling brand overall is %s: $%d\n"
-				"The best-selling type of car is %s: $%d\n"
-				"The most profitable day was day number %d: $%d\n",
+		printf("The best-selling brand overall is %s: %d$\n"
+				"The best-selling type of car is %s: %d$\n"
+				"The most profitable day was day number %d: %d$\n",
 				brands[bestBrand], bestBrand_sales,
 				types[bestType], bestType_sales,
 				bestDay, bestDay_sales) ;
