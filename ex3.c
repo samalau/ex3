@@ -67,7 +67,7 @@ void updateCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 	if (*brandIndex < 0 || *brandIndex > NUM_OF_BRANDS - 1) {
 		printf("This brand is not valid\n") ;
 	} else {
-		if (days[*brandIndex] < DAYS_IN_YEAR - 1 && cube[days[*brandIndex]][*brandIndex][0] == -1) {
+		if (days[*brandIndex] <= DAYS_IN_YEAR - 1 && cube[days[*brandIndex]][*brandIndex][0] == -1) {
 			for (int typeIndex = 0 ; typeIndex < NUM_OF_TYPES ; typeIndex++) {
 				cube[days[*brandIndex]][*brandIndex][typeIndex] = sales[typeIndex] ;
 			}
@@ -268,17 +268,15 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 
 			int yom = -1 ;
 			int input = scanf(" %d", &yom) ;
-			if (input != 1 || yom < 0 || yom >= DAYS_IN_YEAR || yom > lastPossibleDay) {
-				if (input == EOF) {
-					choice = done ;
-					break ;
-				} else {
-					scanf("%*[^\n]") ;
-					scanf("%*c") ;
-					printf("Please enter a valid day\n"
-							"Which day would you like to analyze?\n") ;
-					continue ;
-				}
+			if (input == EOF) {
+				choice = done ;
+				break ;
+			} else if (input != 1 || yom < 0 || yom >= DAYS_IN_YEAR || yom > lastPossibleDay) {
+				scanf("%*[^\n]") ;
+				scanf("%*c") ;
+				printf("Please enter a valid day\n"
+						"Which day would you like to analyze?\n") ;
+				continue ;
 			}
 
 			int valid = 0 ;
