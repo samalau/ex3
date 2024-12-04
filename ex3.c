@@ -259,7 +259,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 		}
 	}
 
-	if (--lastPossibleDay >= 0) {
+	if (lastPossibleDay > 0) {
 	
 		printf("What day would you like to analyze?\n") ;
 
@@ -409,7 +409,7 @@ void _5_simpleInsight(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int d
 	if (lastPossibleDay >= 1) {
 
 		--lastPossibleDay ;
-		
+
 		int bestBrand = -1 ;
 		int bestBrand_sales = -1 ;
 		int bestType = -1 ;
