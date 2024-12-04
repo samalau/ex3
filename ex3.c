@@ -275,7 +275,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 				scanf("%*[^\n]") ;
 				scanf("%*c") ;
 				printf("Please enter a valid day.\n"
-						"Which day would you like to analyze?\n") ;
+						"What day would you like to analyze?\n") ;
 				continue ;
 			}
 
@@ -291,7 +291,7 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 				scanf("%*[^\n]") ;
 				scanf("%*c") ;
 				printf("Please enter a valid day.\n"
-						"Which day would you like to analyze?\n") ;
+						"What day would you like to analyze?\n") ;
 				continue ;
 			}
 
