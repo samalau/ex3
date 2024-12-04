@@ -557,7 +557,7 @@ void _6_avgDelta(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[N
 				}
 
 			}
-			int averageDelta = getSum(differences, lastPossibleDay) / lastPossibleDay ;
+			int averageDelta = getSum(differences, lastPossibleDay) / (lastPossibleDay - 1) ;
 			printf("Brand: %s, Average Delta: %.6d\n", brands[i], averageDelta) ;
 		}
 	}
