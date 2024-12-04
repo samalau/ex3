@@ -212,8 +212,6 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 		int brandIndex = -1 ;
 		int data = scanf(" %d %d %d %d %d", &brandIndex, &sales[0], &sales[1], &sales[2], &sales[3]) ;
 		if (data == EOF) {
-			scanf("%*[^\n]") ;
-			scanf("%*c") ;
 			break ;
 		} else if (data == 5) {
 			if (brandIndex >= 0 && brandIndex < NUM_OF_BRANDS) {
