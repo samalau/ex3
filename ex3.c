@@ -406,21 +406,21 @@ void _5_simpleInsight(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int d
 		}
 	}
 
-	if (--lastPossibleDay >= 0) {
+	if (lastPossibleDay >= 1) {
 
+		--lastPossibleDay ;
+		
 		int bestBrand = -1 ;
 		int bestBrand_sales = -1 ;
 		int bestType = -1 ;
 		int bestType_sales = -1 ;
 		int bestDay = 0 ;
 		int bestDay_sales = -1 ;
-		int brandSize = 0 ;
-		int typeSize = 0 ;
 
 		for (int yom = 0 ; yom <= lastPossibleDay ; yom++) {
 			
-			brandSize = 0 ;
-			typeSize = 0 ;
+			int brandSize = 0 ;
+			int typeSize = 0 ;
 			
 			for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
 				int validData = 0 ;
