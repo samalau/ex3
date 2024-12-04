@@ -412,7 +412,6 @@ void _5_simpleInsight(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int d
 		int bestBrand_sales = -1 ;
 		int bestType = -1 ;
 		int bestType_sales = -1 ;
-		int total_type = 0 ;
 		int bestDay = -1 ;
 		int bestDay_sales = -1 ;
 		int brandSize = 0 ;
@@ -465,7 +464,6 @@ void _5_simpleInsight(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int d
 			}
 			
 			int total_brand = 0 ;
-
 			for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
 				total_brand = getSum(cube[yom][i], NUM_OF_TYPES) ;
 				if (total_brand > bestBrand_sales) {
@@ -474,7 +472,7 @@ void _5_simpleInsight(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int d
 				}
 			}
 
-			total_type = 0 ;
+			int total_type = 0 ;
 			for (int j = 0 ; j < NUM_OF_TYPES ; j++) {
 				int tempCube[NUM_OF_BRANDS] ;
 				for (int i = 0 ; i < NUM_OF_BRANDS ; i++) {
