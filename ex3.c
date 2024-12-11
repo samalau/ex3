@@ -235,6 +235,8 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 				}
 			}
 		}
+		scanf("%*[^\n]") ;
+		scanf("%*c") ;
 	}
 }
 
@@ -514,3 +516,11 @@ void _6_avgDelta(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[N
 		}
 	}
 }
+
+// 2
+// 0 1 1 1 1
+// 1 2 1 1 1 2
+// 2 1 1 1 3
+// 3 1 1 1 1 4
+// 4 1 1 1 1
+// 2
