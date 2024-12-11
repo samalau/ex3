@@ -501,7 +501,6 @@ void _6_avgDelta(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[N
 					}
 				}
 
-				// if ((a != 0 || b != 0) && (a >= 0 && b >= 0)) {
 				if ((a >= 0 && b >= 0)) {
 					int difference = b - a ;
 					sumDifferences += difference ;
