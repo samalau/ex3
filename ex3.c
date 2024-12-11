@@ -24,7 +24,6 @@ int choice = 0 ;
 char brands[NUM_OF_BRANDS][BRANDS_NAMES] = {"Toyoga", "HyunNight", "Mazduh", "FolksVegan", "Key-Yuh"} ;
 char types[NUM_OF_TYPES][TYPES_NAMES] = {"SUV", "Sedan", "Coupe", "GT"} ;
 
-// int getMax(const int *array, int size) ;
 int getSum(const int *array, int size) ;
 void initDays(int days[NUM_OF_BRANDS], int initAsValue) ;
 void initSales(int sales[NUM_OF_TYPES], int initAsValue) ; 
@@ -37,19 +36,6 @@ void _3_dayStat(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 void _4_EntireData(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) ;
 void _5_simpleInsight(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) ;
 void _6_avgDelta(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS]) ;
-
-
-// int getMax(const int *array, int size) {
-// 	int max = 0 ;
-// 	for (int i = 0 ; i < size ; i++) {
-// 		if (array[i] != -1) {
-// 			if (array[i] > max) {
-// 				max = array[i] ;
-// 			}
-// 		}
-// 	}
-// 	return max ;
-// }
 
 
 int getSum(const int *array, int size) {
@@ -67,7 +53,7 @@ void updateCube(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NU
 	if (*brandIndex < 0 || *brandIndex > NUM_OF_BRANDS - 1) {
 		printf("This brand is not valid\n") ;
 	} else {
-		if (days[*brandIndex] <= DAYS_IN_YEAR - 1 && cube[days[*brandIndex]][*brandIndex][0] == -1) {
+		if (days[*brandIndex] < DAYS_IN_YEAR - 1 && cube[days[*brandIndex]][*brandIndex][0] == -1) {
 			for (int typeIndex = 0 ; typeIndex < NUM_OF_TYPES ; typeIndex++) {
 				cube[days[*brandIndex]][*brandIndex][typeIndex] = sales[typeIndex] ;
 			}
