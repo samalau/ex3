@@ -200,6 +200,7 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 		}
 	}
 	if (nextAvailableDay < DAYS_IN_YEAR) {
+		int valid = 0 ;
 		int filled = 0 ;
 		while (!filled) {
 			filled = 1 ;
@@ -216,7 +217,7 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 				choice = done ;
 				return ;
 			}
-			if (brandIndex >= NUM_OF_BRANDS || brandIndex < 0) {
+			if (brandIndex < 0 || brandIndex >= NUM_OF_BRANDS) {
 				scanf("%*[^\n]") ;
 				scanf("%*c") ;
 				filled = 0 ;
@@ -226,9 +227,10 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 				if (saleInput == EOF) {
 					choice = done ;
 					break ;
-				} else if (saleInput == 4) {
+				}
+				if (saleInput == 4) {
 					if (brandIndex >= 0 && brandIndex < NUM_OF_BRANDS) {
-						int valid = 1 ;
+						valid = 1 ;
 						if (cube[nextAvailableDay][brandIndex][0] == -1) {
 							for (int i = 0 ; i < NUM_OF_TYPES ; i++) {
 								if (sales[i] < 0) {
@@ -543,10 +545,3 @@ void _6_avgDelta(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[N
 	}
 }
 
-// 2
-// 0 1 1 1 1
-// 1 2 1 1 1 2
-// 2 1 1 1 3
-// 3 1 1 1 1 4
-// 4 1 1 1 1
-// 2
