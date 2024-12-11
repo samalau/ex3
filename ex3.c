@@ -151,35 +151,42 @@ int main() {
 void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
 	int brandIndex ;
 	printf("What brand?\n") ;
-	int input = scanf(" %d %d %d %d %d", &brandIndex, &sales[0], &sales[1], &sales[2], &sales[3]) ;
-	if (input == EOF) {
-		choice = done ;
-		return ;
-	} else if (input != 5 || brandIndex >= NUM_OF_BRANDS || brandIndex < 0) {
+	int brandInput = scanf(" %d", &brandIndex) ;
+	if (brandIndex >= NUM_OF_BRANDS || brandIndex < 0) {
 		scanf("%*[^\n]") ;
 		scanf("%*c") ;
 		printf("This brand is not valid\n") ;
 	} else {
-		int valid = 0 ;
-		if (brandIndex >= 0 && brandIndex < NUM_OF_BRANDS) {
-			valid = 1 ;
-			for (int i = 0 ; i < NUM_OF_TYPES ; i++) {
-				if (sales[i] < 0) {
-					valid = 0 ;
-					break ;
+		int saleInput = scanf(" %d %d %d %d", &sales[0], &sales[1], &sales[2], &sales[3]) ;
+		if (saleInput == EOF) {
+			choice = done ;
+			return ;
+		} else if (saleInput != 4 || brandIndex >= NUM_OF_BRANDS || brandIndex < 0) {
+			scanf("%*[^\n]") ;
+			scanf("%*c") ;
+			printf("This brand is not valid\n") ;
+		} else {
+			int valid = 0 ;
+			if (brandIndex >= 0 && brandIndex < NUM_OF_BRANDS) {
+				valid = 1 ;
+				for (int i = 0 ; i < NUM_OF_TYPES ; i++) {
+					if (sales[i] < 0) {
+						valid = 0 ;
+						break ;
+					}
 				}
-			}
-			if (valid && days[brandIndex] < DAYS_IN_YEAR - 1) {
-				updateCube(cube, days, &brandIndex, sales) ;
+				if (valid && days[brandIndex] < DAYS_IN_YEAR - 1) {
+					updateCube(cube, days, &brandIndex, sales) ;
+				} else {
+					scanf("%*[^\n]") ;
+					scanf("%*c") ;
+					printf("This brand is not valid\n") ;
+				}
 			} else {
 				scanf("%*[^\n]") ;
 				scanf("%*c") ;
 				printf("This brand is not valid\n") ;
 			}
-		} else {
-			scanf("%*[^\n]") ;
-			scanf("%*c") ;
-			printf("This brand is not valid\n") ;
 		}
 	}
 }
@@ -204,41 +211,52 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 			}
 			printf("\nPlease complete the data\n") ;
 			int brandIndex = -1 ;
-			int data = scanf(" %d %d %d %d %d", &brandIndex, &sales[0], &sales[1], &sales[2], &sales[3]) ;
-			if (data == EOF) {
+			int brandInput = scanf(" %d", &brandIndex) ;
+			if (brandInput == EOF) {
 				choice = done ;
-				break ;
-			} else if (data == 5) {
-				if (brandIndex >= 0 && brandIndex < NUM_OF_BRANDS) {
-					int valid = 1 ;
-					if (cube[nextAvailableDay][brandIndex][0] == -1) {
-						for (int i = 0 ; i < NUM_OF_TYPES ; i++) {
-							if (sales[i] < 0) {
-								valid = 0 ;
-								printf("This brand is not valid\n") ;
-								break ;
+				return ;
+			}
+			if (brandIndex >= NUM_OF_BRANDS || brandIndex < 0) {
+				scanf("%*[^\n]") ;
+				scanf("%*c") ;
+				printf("This brand is not valid\n") ;
+			} else {
+				int saleInput = scanf(" %d %d %d %d", &sales[0], &sales[1], &sales[2], &sales[3]) ;
+				if (saleInput == EOF) {
+					choice = done ;
+					break ;
+				} else if (saleInput == 4) {
+					if (brandIndex >= 0 && brandIndex < NUM_OF_BRANDS) {
+						int valid = 1 ;
+						if (cube[nextAvailableDay][brandIndex][0] == -1) {
+							for (int i = 0 ; i < NUM_OF_TYPES ; i++) {
+								if (sales[i] < 0) {
+									valid = 0 ;
+									printf("This brand is not valid\n") ;
+									break ;
+								}
 							}
+						} else {
+							printf("This brand is not valid\n") ;
+							valid = 0 ;
+						}
+						if (valid) {
+							updateCube(cube, days, &brandIndex, sales) ;
 						}
 					} else {
 						printf("This brand is not valid\n") ;
-						valid = 0 ;
-					}
-					if (valid) {
-						updateCube(cube, days, &brandIndex, sales) ;
 					}
 				} else {
 					printf("This brand is not valid\n") ;
-				}
-			} else {
-				printf("This brand is not valid\n") ;
 
-			}
-			scanf("%*[^\n]") ;
-			scanf("%*c") ;
-			for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
-				if (days[j] == nextAvailableDay) {
-					filled = 0 ;
-					break ;
+				}
+				scanf("%*[^\n]") ;
+				scanf("%*c") ;
+				for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
+					if (days[j] == nextAvailableDay) {
+						filled = 0 ;
+						break ;
+					}
 				}
 			}
 		}
