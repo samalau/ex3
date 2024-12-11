@@ -155,9 +155,10 @@ void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day
 	if (input == EOF) {
 		choice = done ;
 		return ;
-	} else if (input != 5) {
+	} elif (input != 5 || brandIndex >= NUM_OF_BRANDS || brandIndex < 0) {
 		scanf("%*[^\n]") ;
 		scanf("%*c") ;
+		printf("This brand is not valid\n") ;
 	} else {
 		int valid = 0 ;
 		if (brandIndex >= 0 && brandIndex < NUM_OF_BRANDS) {
@@ -172,6 +173,8 @@ void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day
 				updateCube(cube, days, &brandIndex, sales) ;
 			}
 		} else {
+			scanf("%*[^\n]") ;
+			scanf("%*c") ;
 			printf("This brand is not valid\n") ;
 		}
 	}
