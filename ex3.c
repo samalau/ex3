@@ -237,21 +237,17 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 									break ;
 								}
 							}
+							if (valid) {
+								updateCube(cube, days, &brandIndex, sales) ;
+							}
 						} else {
+							filled = 0;
 							printf("This brand is not valid\n") ;
-							valid = 0, filled = 0;
-						}
-						if (valid) {
-							updateCube(cube, days, &brandIndex, sales) ;
 						}
 					} else {
 						filled = 0;
 						printf("This brand is not valid\n") ;
 					}
-				} else {
-					filled = 0;
-					printf("This brand is not valid\n") ;
-
 				}
 				scanf("%*[^\n]") ;
 				scanf("%*c") ;
