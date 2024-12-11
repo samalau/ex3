@@ -219,6 +219,7 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 			if (brandIndex >= NUM_OF_BRANDS || brandIndex < 0) {
 				scanf("%*[^\n]") ;
 				scanf("%*c") ;
+				filled = 0 ;
 				printf("This brand is not valid\n") ;
 			} else {
 				int saleInput = scanf(" %d %d %d %d", &sales[0], &sales[1], &sales[2], &sales[3]) ;
@@ -231,33 +232,37 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 						if (cube[nextAvailableDay][brandIndex][0] == -1) {
 							for (int i = 0 ; i < NUM_OF_TYPES ; i++) {
 								if (sales[i] < 0) {
-									valid = 0 ;
+									valid = 0, filled = 0;
 									printf("This brand is not valid\n") ;
 									break ;
 								}
 							}
 						} else {
 							printf("This brand is not valid\n") ;
-							valid = 0 ;
+							valid = 0, filled = 0;
 						}
 						if (valid) {
 							updateCube(cube, days, &brandIndex, sales) ;
 						}
 					} else {
+						filled = 0;
 						printf("This brand is not valid\n") ;
 					}
 				} else {
+					filled = 0;
 					printf("This brand is not valid\n") ;
 
 				}
 				scanf("%*[^\n]") ;
 				scanf("%*c") ;
-				for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
-					if (days[j] == nextAvailableDay) {
-						filled = 0 ;
-						break ;
+				if (filled != 0) {
+					for (int j = 0 ; j < NUM_OF_BRANDS ; j++) {
+						if (days[j] == nextAvailableDay) {
+							filled = 0 ;
+							break ;
+						}
 					}
-				}
+				}			
 			}
 		}
 		scanf("%*[^\n]") ;
