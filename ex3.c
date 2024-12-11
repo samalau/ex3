@@ -150,7 +150,7 @@ int main() {
 
 void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[NUM_OF_BRANDS], int sales[NUM_OF_TYPES]) {
 	int brandIndex ;
-	printf("Enter the sales data for a single brand on a single day:\n") ;
+	printf("What brand?\n") ;
 	int input = scanf(" %d %d %d %d %d", &brandIndex, &sales[0], &sales[1], &sales[2], &sales[3]) ;
 	if (input == EOF) {
 		choice = done ;
@@ -159,8 +159,9 @@ void _1_enterSingle(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day
 		scanf("%*[^\n]") ;
 		scanf("%*c") ;
 	} else {
-		int valid = 1 ;
+		int valid = 0 ;
 		if (brandIndex >= 0 && brandIndex < NUM_OF_BRANDS) {
+			valid = 1 ;
 			for (int i = 0 ; i < NUM_OF_TYPES ; i++) {
 				if (sales[i] < 0) {
 					valid = 0 ;
@@ -207,6 +208,7 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 						for (int i = 0 ; i < NUM_OF_TYPES ; i++) {
 							if (sales[i] < 0) {
 								valid = 0 ;
+								printf("This brand is not valid\n") ;
 								break ;
 							}
 						}
@@ -222,6 +224,7 @@ void _2_enterEvery(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days
 				}
 			} else {
 				printf("This brand is not valid\n") ;
+
 			}
 			scanf("%*[^\n]") ;
 			scanf("%*c") ;
@@ -498,7 +501,8 @@ void _6_avgDelta(int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int days[N
 					}
 				}
 
-				if ((a != 0 || b != 0) && (a >= 0 && b >= 0)) {
+				// if ((a != 0 || b != 0) && (a >= 0 && b >= 0)) {
+				if ((a >= 0 && b >= 0)) {
 					int difference = b - a ;
 					sumDifferences += difference ;
 					validDifferences++ ;
